@@ -18,6 +18,7 @@ import {
     Button,
     Container, Jumbotron } from 'reactstrap';
 import Product from '../component/Product';
+import axios from 'axios'
 class ItemDetail extends Component{
   constructor(props) {
     super(props);
