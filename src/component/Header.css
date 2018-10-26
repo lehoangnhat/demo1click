@@ -1,0 +1,89 @@
+
+
+#SellerHeader{
+    background:#FFFFFF;
+    list-style-type:none;
+    margin:0;
+    padding:0;
+    
+    
+}
+
+
+
+
+#locationSelect{
+    position: relative;
+    width:100%;
+    
+}
+#searchProductName{
+    position: relative;
+    width: 100%;
+    
+    
+   
+    font-family: FontAwesome;
+    
+}
+
+
+#HeaderSearchBtn{
+   
+    position: relative;
+    width: 100%;
+    
+    background: #303030;
+    border-radius: 5px;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    line-height: auto;
+    font-size: 0.9em;
+    text-align: auto;
+
+    color: #FEAF34;
+}
+
+#NavLoginSignUp{
+    position: relative;
+    
+    left: 10%;
+    margin-top:3%;
+    width: 24vw; 
+   
+}
+
+#dangtinText{
+    width:8vw;
+    
+    
+}
+#profilePic{
+    margin-top:-10px;
+    border-radius: 50%;
+    width:50px;
+    
+}
+/*
+@media screen and (max-width: 1069px){
+    
+    #dangtinText{
+        font-size:5px;
+    }
+    
+    #searchBtn{
+        font-size:10px;
+        
+    }
+}
+@media screen and (max-width: 650px){
+    #dangtinText{
+        font-size:2px;
+    }
+    #searchBtn{
+        font-size:8px;
+        
+    }
+    
+}*/

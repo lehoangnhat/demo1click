@@ -1,0 +1,45 @@
+#DetailContainer{
+  padding: 0;
+  height: 100%;
+  width:100%;
+  display:table;
+	table-layout:fixed;
+}
+
+#recommendRow{
+  margin:0;
+  padding:0;
+  margin-bottom: 2%;
+}
+.slick-prev:before {
+    color: black;
+    font-size: 30px;
+  }
+  
+.slick-next:before {
+  color: black;
+  font-size: 30px;
+  }
+#recommendSlider{
+  
+  width: 80%;
+  margin-bottom: 5%;
+  margin-left:10%;
+}
+
+#topJumbo{
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top:2%;
+  margin-left:4%;
+  margin-right:4%;
+  padding: 0;
+}
+
+
+#thumbnailPic{
+  width:45vw;
+  height:80vh;
+  margin-left:8%;
+  margin-top: 3%;
+}

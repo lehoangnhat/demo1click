@@ -1,0 +1,115 @@
+#FooterContainer{
+    
+    width:100%;
+    height: 28vh;
+    display: table-row;
+    
+}
+
+
+#TopFooter{
+    background:#FFFFFF;
+    height: 79%;
+}
+
+
+#FooterLogo{
+    position: relative;
+    margin-left: 5vw; 
+    width: 14vw;
+    height: 6vh;
+    
+    margin-top: 16%;
+        
+}
+
+#allRight{
+    
+    margin-left: 5.46%;
+    margin-top: 0.6%;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 16px;
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    color: #686868;
+}
+#TextUD{
+    position: relative;
+    top:10%;
+    left:10%;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 14px;
+    text-align: justify;
+
+    color: #303030;
+}
+#imgAppstore{
+    width: 11vw;
+    position: relative;
+    left:5%;
+    top:2%;
+  
+}
+#imgGooglePlay{
+    width: 9.8vw;
+    position: relative;
+    left:10%;
+
+}
+#TextHoTro{
+    position: relative;
+    top:10%;
+    left:10%;
+    margin-bottom: 7%;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 14px;
+    text-align: justify;
+
+    color: #303030;
+}
+.nav-link{
+    
+    margin-top:3%;
+    margin-left:3%;
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 14px;
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    color: #686868;
+}
+
+@media screen and (max-width: 1069px){
+    .nav-link{
+        font-size:10px;
+    }
+    #TextHoTro, #TextUD{
+        font-size:10px;
+    }
+}
+@media screen and (max-width: 650px){
+    .nav-link{
+        font-size:8px;
+    }
+    #TextHoTro, #TextUD{
+        font-size:8px;
+    }
+}

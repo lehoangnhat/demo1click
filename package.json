@@ -1,0 +1,42 @@
+{
+  "name": "1click",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "bootstrap": "^4.1.3",
+    "es6-menu-aim": "^1.0.4",
+    "jquery": "^3.3.1",
+    "jw-react-pagination": "^1.0.7",
+    "popper.js": "^1.14.4",
+    "react": "^16.4.2",
+    "react-avatar": "^3.4.6",
+    "react-bootstrap": "^0.32.1",
+    "react-data-menu": "^1.1.1",
+    "react-dom": "^16.4.2",
+    "react-js-pagination": "^3.0.2",
+    "react-mega-menu": "^1.0.1",
+    "react-menu-aim": "^2.0.0",
+    "react-paginate": "^5.2.4",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "react-simple-dropdown": "^3.2.3",
+    "react-slick": "^0.23.1",
+    "reactstrap": "^6.4.0",
+    "redux": "^4.0.0",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "slick-carousel": "^1.8.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
