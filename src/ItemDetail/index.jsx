@@ -167,6 +167,9 @@ handleSearch(e) {
           <Container fluid={"true"} id="DetailContainer" >
             <Header
             cartItems={this.state.cart}
+            handleSearch={this.handleSearch}
+            handleQueryChange={this.handleQueryChange}
+            query ={this.state.query}
             
             />
 
