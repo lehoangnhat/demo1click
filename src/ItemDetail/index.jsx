@@ -27,6 +27,8 @@ class ItemDetail extends Component{
       quantity: 1,
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
+        this.handleQueryChange = this.handleQueryChange.bind(this);
   }
   getProducts() {
         
@@ -38,6 +40,35 @@ class ItemDetail extends Component{
   componentWillMount() {
     this.getProducts();
   }
+
+  handleQueryChange(e) {
+    this.setState({ query : e.target.value })
+}
+
+handleSearch(e) {
+    e.preventDefault();
+    let self=this;
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
+    {
+        params: {
+            query: this.state.query
+        }
+    })
+    .then(function (response) {
+        console.log(response.data.data.items);
+        self.setState({products : response.data.data.items,
+                        isSubmit: true
+        })
+        self.updateProducts(response.data.data.items)
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+}
+
+
   handleAddToCart(selectedProducts) {
     let cartItem = this.state.cart;
     let productID = selectedProducts.id;

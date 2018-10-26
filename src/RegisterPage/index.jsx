@@ -57,7 +57,7 @@ class RegisterPage extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
-      axios.post('http://localhost:9997/api/user/register',{ 
+      axios.post('https://demo1clickapi.herokuapp.com/api/user/register',{ 
         username: this.state.username,
         password: this.state.password,
         firstName: this.state.fname,

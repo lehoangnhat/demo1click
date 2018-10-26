@@ -60,7 +60,7 @@ class Login extends Component {
       let self = this
         axios({
           method: 'post',
-          url: 'http://localhost:9997/api/user/login',
+          url: 'https://demo1clickapi.herokuapp.com/api/user/login',
           data: {
             username: this.state.username,
             password: this.state.password
