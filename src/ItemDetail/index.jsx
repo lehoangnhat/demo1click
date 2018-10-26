@@ -26,7 +26,7 @@ class ItemDetail extends Component{
       products: [],
       cart: [],
       quantity: 1,
-      query
+      query:""
     };
     this.handleAddToCart = this.handleAddToCart.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
