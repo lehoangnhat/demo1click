@@ -1,3 +1,26 @@
+#DashboardContainer{
+    padding-top: 2%;
+}
+
 #DashboardJumbo{
-    
+    padding:0;
+    margin:0;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-left: 18%;
+    margin-right: 16%;
+}
+
+.nav .nav-item{
+    border-bottom: 1px solid #E9E9E9;
+    margin-left: 10%;
+}
+#DashboardContainer a{
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    text-align: justify;
+    font-size: normal;
+    color: #686868;
 }

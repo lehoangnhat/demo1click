@@ -11,6 +11,10 @@ import LoadingProducts from "../Loader/Products";
 import NoResults from "../Empty/NoResults";
 import JwPagination from 'jw-react-pagination';
 import './ProductList.css';
+
+import { connect } from 'react-redux';
+import { addToCart } from '../_action/cartActions';
+
 /*const ProductList = ({ products, showDetails }) => {*/
   const customStyles = {
     ul: {
@@ -57,7 +61,6 @@ const customLabels = {
 
       // store example items and current page of items in local state
       this.state = {
-          isChange: this.props.isChange,
           productsData: this.props.productsList,
           pageOfItems: []
       };
@@ -66,33 +69,53 @@ const customLabels = {
       // update local state with new page of items
       this.setState({ pageOfItems });
     }
+    componentDidMount(){
+      
+    }
     render() {
-    
-
     let view;
-
+    
+    let term = this.props.filterTerm;
+  
     view = (
       <Row id="ProductList">
         
-        {this.state.pageOfItems.map(product => 
-                  <Product
-                    key={product.id}
-                    price={product.price}
-                    name={product.name}
-                    image={product.image}
-                    id={product.id}
-                    location ={product.location}
-                    description = {product.description}
+        {this.state.pageOfItems
+       // .filter((product)=>product.name.includes(term) )
+        //.filter((product)=>product.price > 1000)
+        .map((product,index) => 
+                  <Product 
+                    index ={index}
+                    product={product}
+                    handleSelected={this.props.handleSelected}
+                    selectedP={this.props.selectedP}
                   />
-                )}
+                )
+                }
         
       </Row>
       );
     
-  return <div>{view} <JwPagination pageSize={12} items={this.props.productsList} onChangePage={this.onChangePage} labels={customLabels} styles={customStyle} /></div>;
+    
+    
+  return (
+    
+    <div>{view} <JwPagination pageSize={12} items={this.props.productsList} onChangePage={this.onChangePage} labels={customLabels} styles={customStyle} /></div>
+  );
+  
+  }
+}
+function mapStateToProps(state, props) {
+  return {
+      products: state.products
+  };
+}
+function mapDispatchToProps(dispatch) {
+  return {
+      addToCart: item => dispatch(addToCart(item))
   }
 }
 
 
 
-export default ProductList;
+export default connect(mapStateToProps, mapDispatchToProps)(ProductList);

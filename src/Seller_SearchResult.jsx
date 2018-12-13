@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 import './Seller_SearchResult.css'
-import Header from './component/Header';
-import Footer from './component/Footer';
 
 import ProductList from './component/ProductList';
 import axios from "axios";
+import { history } from './_helper';
 
 import {
     Row,
@@ -17,63 +16,39 @@ import {
     FormGroup,
     Label,
     Input,
+    Button,
      } from 'reactstrap';
+
+     import { connect } from 'react-redux';
+     import { addToCart } from './_action/cartActions';
+
+     import ReactLoading from 'react-loading';
 
 class Seller_SearchResult extends Component{
 
     constructor(props) {
         super(props);
         this.state = {
-          products: this.props.location.state.data,
-          query:"",
-          isSubmit:false
+          products: this.props.productsList,
+          
         };
-        this.handleSearch = this.handleSearch.bind(this);
-        this.handleQueryChange = this.handleQueryChange.bind(this);
-        this.updateProducts = this.updateProducts.bind(this);
+        
     }
 
-    updateProducts(){
-        this.setState({isSubmit:true })
-    }
+   
 
-    handleQueryChange(e) {
-        this.setState({ query : e.target.value })
+    componentDidMount(){
+        this.props.handleChangeState(false);
     }
-
-    handleSearch(e) {
-        e.preventDefault();
-        let self=this;
-        axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
-        {
-            params: {
-                query: this.state.query
-            }
-        })
-        .then(function (response) {
-            console.log(response.data.data.items);
-            self.setState({products : response.data.data.items,
-                            isSubmit: true
-            })
-            self.updateProducts(response.data.data.items)
-            
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-
+    componentWillUnmount(){
+        this.props.handleChangeState(true);
     }
-    
 
     render() {
         return(
+            
             <Container fluid id ="sellerContainer" >
-                <Header
-                handleSearch={this.handleSearch}
-                handleQueryChange={this.handleQueryChange}
-                query ={this.state.query}
-                updateProducts = {this.updateProducts}
-                />
+                {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
                 <Row  id="productListRow"  >
                 <Col  xs="3" id="FilterCol">
 
@@ -106,19 +81,22 @@ class Seller_SearchResult extends Component{
                             <Input type="checkbox" /> 10 - 20 triệu
                         </Label>
                         </FormGroup>
+                        
                     </Form>
+                   
                 </Col>
                 
                 <Col  xs="9">
                     <Jumbotron id="resultJumbo">
                     <ProductList
-                        productsList={this.state.products}
+                        productsList={this.props.productsList}
+                        handleSelected={this.props.handleSelected}
+                        
                     />
                     
                     </Jumbotron>
                 </Col>
                 </Row>
-                <Footer/>
                 
                  
                     
@@ -126,5 +104,16 @@ class Seller_SearchResult extends Component{
         )
     }
 }
+function mapStateToProps(state, props) {
+    return {
+        products: state.products
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        addToCart: item => dispatch(addToCart(item))
+    }
+}
 
-export default Seller_SearchResult;
+
+export default  connect(mapStateToProps, mapDispatchToProps)(Seller_SearchResult);

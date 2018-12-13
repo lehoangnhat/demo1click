@@ -48,7 +48,7 @@
     left: 5%;
     top: 75%;
 
-    font-family: Lato;
+    font-family: 'Roboto',sans-serif;
     font-style: normal;
     font-weight: normal;
     line-height: normal;
@@ -69,8 +69,8 @@
 #registerForm{
     position: relative;
     width:115%;
-    height: 77vh;
     top:4%;
+    
     
     margin-left: -13%;
     z-index: 20;
@@ -100,6 +100,7 @@
     left:16%;
     
     width: 57%;
+    margin-bottom: 5%;
 }
 
 #registerBtn{
@@ -122,17 +123,6 @@
     color: #FEAF34;
 }
 
-#loginFormLeftCol{
-    height: 100%;
-}
-#loginRightCol{
-    
-    
-    background-image: url("../img/loginPicRight.jpg");
-    background-size:     cover;        
-    background-repeat:   no-repeat;
-    background-position: center center; 
-}
 #tempCont{
     
     height: 100%;
@@ -141,3 +131,9 @@
     height: 100%;
 }
 /*324*/
+
+.error{
+    margin-left: 5px;
+    font-size: 13px;
+    color: red;
+  }

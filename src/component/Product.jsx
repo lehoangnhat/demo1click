@@ -5,6 +5,8 @@ import { Card, CardImg, CardText, CardBody,
 
 import './Product.css'; 
 import { history } from '../_helper';
+import { connect } from 'react-redux';
+import { addToCart } from '../_action/cartActions';
 
 class Product extends Component{
 /*const Product = ({ product, showDetails }) => (
@@ -14,37 +16,60 @@ class Product extends Component{
     super(props);
   }
   render() {
-    let image = this.props.image;
-    let name = this.props.name;
-    let price = this.props.price;
-    let location =this.props.location;
-    let id = this.props.id;
-    let description = this.props.description;
+    let product = this.props.product;
+    let image = this.props.product.images + '.jpg';
+    
+    let name = this.props.product.name;
+    let price = this.props.product.price;
+    let location =this.props.product.location;
+    let id = this.props.product.id;
+    let description = this.props.product.description;
+    const formatter = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0
+    })
     return (
-      <Card id="productCard" onClick={() => history.push({
-        pathname: '/detail',
-        state:{
-          image,
-          name,
-          price,
-          location,
-          description,
-
-          id
-
-         }
-      })
-    }>
+      <Card key={id} id="productCard" onClick={() => {
+        this.props.handleSelected(product);
+        document.body.style.cursor = "default";
+        history.push({
+          pathname: '/detail'
+        }); 
+        
+      }
+      } 
+      onMouseEnter={() => {
+        document.body.style.cursor = "pointer";
+      }}
+      onMouseLeave={() => {
+        document.body.style.cursor = "default";
+      }}
+      >
       <CardImg top src={image} alt="productImg" id="cardImg"/>
       <CardBody>
           <CardTitle id="productName">{name}</CardTitle>
-          <CardText id="price">Giá:{price}</CardText>
-          <CardText id="location">Địa chỉ{location}</CardText>
+          <CardText id="price">{formatter.format(price)}</CardText>
+         
         </CardBody>
       </Card>
+      
     );
+  }
+}
+/*
+*/
+function mapStateToProps(state, props) {
+  return {
+    products: state.products
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+      addToCart: item => dispatch(addToCart(item))
   }
 }
 
 
-export default Product;
+export default connect(mapStateToProps, mapDispatchToProps)(Product);

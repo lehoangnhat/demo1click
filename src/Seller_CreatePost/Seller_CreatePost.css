@@ -1,14 +1,17 @@
+#createPostContainer{
+    padding-top:3%;
+}
+
 #jumboCreatePost{
     padding: 0;
     width: 65%;
     margin-left: 4%;
-    margin-top: 4%;
     background: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
 #topRow{
-    height: 5%;
+    padding: 1%;
     background: #FAFAFA;
     
 }
@@ -18,7 +21,7 @@
     margin-top:auto;
     margin-bottom:auto;
     margin-left:3%;
-    font-family: Lato;
+    font-family: 'Lato', sans-serif;
     font-style: normal;
     font-weight: bold;
     line-height: normal;
@@ -31,4 +34,43 @@
 #createPostForm{
     margin-left:4%;
     margin-right:4%;
+}
+
+#imgPreview{
+    text-align: center;
+    line-height: 164px;
+    height: 164px;
+    min-width: 58%;
+    min-height: 21%;
+    border: 2px solid #FEAF34;
+    border-style : dashed;
+    margin-left:0;
+    margin-top :2%;
+    margin-bottom : 2%;
+}
+#imgPreview img {
+    max-width:100%;
+    max-height: 100%;
+}
+#listCategory{
+    margin-bottom: 10%;
+}
+
+#createPostBtn{
+    background: #303030;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: auto;
+    font-size: 0.9em;
+    text-align: auto;
+
+    color: #FEAF34;
+    margin-bottom: 2%;
+}
+
+#previewText{
+    line-height: 164px;
+    text-align: center;
 }

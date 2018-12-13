@@ -9,7 +9,6 @@
 #recommendRow{
   margin:0;
   padding:0;
-  margin-bottom: 2%;
 }
 .slick-prev:before {
     color: black;
@@ -36,10 +35,32 @@
   padding: 0;
 }
 
+#recommendJumbo{
+  background: #FFFFFF;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top:2%;
+  margin-left:4%;
+  margin-right:4%;
+  padding: 0;
+}
 
 #thumbnailPic{
   width:45vw;
   height:80vh;
-  margin-left:8%;
+  margin-left:5%;
   margin-top: 3%;
+}
+
+#detailBtn{
+  background: #303030;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: auto;
+    margin-right:5%;
+   
+    white-space: normal;
+
+    color: #FEAF34;
 }

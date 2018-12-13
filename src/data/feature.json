@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "name": "Giày 1",
+      "price": "499.99$",
+      "image": "./img/shoe/1.jpg",
+      "location": "TP.Hồ Chí Minh"
+    },
+    {
+        "id": 2,
+        "name": "Giày 2",
+        "price": "300.000.000 VND",
+        "image": "./img/shoe/1.jpg",
+        "location": "Hà Nội"
+    },
+    {
+      "id": 3,
+      "name": "Giày 2",
+      "price": "300.000.000 VND",
+      "image": "./img/shoe/2.jpg",
+      "location": "Hà Nội"
+    },
+    {
+      "id": 4,
+      "name": "Giày 2",
+      "price": "300.000.000 VND",
+      "image": "./img/shoe/2.jpg",
+      "location": "Hà Nội"
+    }
+]

@@ -1,32 +1,34 @@
 #FooterContainer{
     
-    width:100%;
-    height: 28vh;
-    display: table-row;
-    
+    margin:0;
+    padding:0;
+    max-height: 28vh;
 }
 
 
 #TopFooter{
     background:#FFFFFF;
-    height: 79%;
+    
+}
+#logoCol{
+    
+    padding:0;
+    margin:0;
+    padding-left: 5.4%;
+    padding-top: 2%;
 }
 
-
 #FooterLogo{
-    position: relative;
-    margin-left: 5vw; 
-    width: 14vw;
-    height: 6vh;
-    
-    margin-top: 16%;
+    margin:2%;
+    max-width: 194px;
+    max-height: 46px;
+   
         
 }
 
 #allRight{
     
-    margin-left: 5.46%;
-    margin-top: 0.6%;
+   
 
     font-family: Lato;
     font-style: normal;
@@ -40,10 +42,16 @@
     word-wrap: break-word;
     color: #686868;
 }
+
+
+#UDCol{
+    margin:0;
+    padding:1%;
+   
+}
+
 #TextUD{
-    position: relative;
-    top:10%;
-    left:10%;
+    
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
@@ -53,24 +61,26 @@
 
     color: #303030;
 }
+#HTCol{
+    margin:0;
+    padding:1%;
+}
+#HTCol .nav-link{
+    padding:2%;
+    margin:0;
+    
+}
 #imgAppstore{
-    width: 11vw;
-    position: relative;
-    left:5%;
-    top:2%;
-  
+    width: 135px;  
+    height: 40px;
 }
 #imgGooglePlay{
-    width: 9.8vw;
-    position: relative;
-    left:10%;
+    width: 135px;  
+    height: 40px;
 
 }
 #TextHoTro{
-    position: relative;
-    top:10%;
-    left:10%;
-    margin-bottom: 7%;
+    margin-left:2%;
     font-family: Lato;
     font-style: normal;
     font-weight: bold;
@@ -82,8 +92,6 @@
 }
 .nav-link{
     
-    margin-top:3%;
-    margin-left:3%;
     font-family: Lato;
     font-style: normal;
     font-weight: normal;
@@ -97,19 +105,3 @@
     color: #686868;
 }
 
-@media screen and (max-width: 1069px){
-    .nav-link{
-        font-size:10px;
-    }
-    #TextHoTro, #TextUD{
-        font-size:10px;
-    }
-}
-@media screen and (max-width: 650px){
-    .nav-link{
-        font-size:8px;
-    }
-    #TextHoTro, #TextUD{
-        font-size:8px;
-    }
-}

@@ -3,91 +3,91 @@
     "id": 1,
     "name": "Giày 1",
     "price": "499.99$",
-    "image": "./img/shoe/1.jpg",
+    "images": "./img/shoe/1",
     "location": "TP.Hồ Chí Minh"
   },
   {
       "id": 2,
       "name": "Giày 2",
       "price": "300.000.000 VND",
-      "image": "./img/redshoe.jpg",
+      "images": "./img/shoe/1",
       "location": "Hà Nội"
   },
   {
     "id": 3,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 4,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 5,
     "name": "Quần 4",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 6,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 7,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2.jpg",
     "location": "Hà Nội"
   },
   {
     "id": 8,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 9,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 10,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 11,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2.jpg",
     "location": "Hà Nội"
   },
   {
     "id": 12,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   },
   {
     "id": 13,
     "name": "Giày 2",
     "price": "300.000.000 VND",
-    "image": "./img/shoe/2.jpg",
+    "images": "./img/shoe/2",
     "location": "Hà Nội"
   }
 ]

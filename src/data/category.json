@@ -1,0 +1,38 @@
+[
+    {
+      "id": 1,
+      "name": "Thời trang",
+      "image": "./img/category/thoiTrang.jpg"
+      
+    },
+    {
+        "id": 2,
+        "name": "Xe cộ",
+        "image": "./img/category/xeco.jpg"
+    },
+    {
+      "id": 3,
+      "name": "Giày dép",
+      "image": "./img/category/giayDep.jpg"
+    },
+    {
+        "id": 4,
+        "name": "Nội thất",
+        "image": "./img/category/noithat.jpg"
+        
+    },
+
+    {
+      "id": 5,
+      "name": "Đồ điện tử",
+      "image": "./img/category/dodientu.jpg"
+      
+    },
+    {
+        "id": 6,
+        "name": "Sách",
+        "image": "./img/category/sach.jpg"
+        
+    }
+
+]

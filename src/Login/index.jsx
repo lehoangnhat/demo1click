@@ -20,6 +20,10 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './Login.css';
 
+
+
+
+
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -30,12 +34,35 @@ class Login extends Component {
     this.state = {
         username: '',
         password: '',
-        submitted: false
+        errors: {}
     };
 
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleValidation(){
+
+      let username = this.state.username;
+      let password = this.state.password;
+      let errors = {};
+      let formIsValid = true;
+  
+      //Name
+      if(!username){
+        formIsValid = false;
+        errors["name"] = "Xin điền tên đăng nhập";
+      }
+  
+    
+      if(!password){
+        formIsValid = false;
+        errors["password"] = "Xin điền mật khẩu";
+      }
+      
+      this.setState({errors: errors});
+      return formIsValid;
     }
 
     handleUsernameChange(e) {
@@ -48,16 +75,10 @@ class Login extends Component {
     handleSubmit(e) {
         e.preventDefault();
         
-       /* axios.post('http://localhost:9997/api/user/login',
-        {
-        username: this.state.email,
-        password: this.state.password
-        })
-      .then(function (response) {
-        console.log('saved successfully');
-      });*/
+        if(this.handleValidation()){
+        
       
-      let self = this
+        let self = this
         axios({
           method: 'post',
           url: 'https://demo1clickapi.herokuapp.com/api/user/login',
@@ -69,16 +90,38 @@ class Login extends Component {
 
         })
         .then(function (response) {
-          self.setState({submitted:true});
-          sessionStorage.setItem('token', response.data);
-          history.push("/");
-          console.log(response);
-          console.log(sessionStorage.getItem('token'))
+          console.log(response.data)
+          if(response.data.status ==='SUCCESS'){
+            alert("Đăng nhập thành công");
+            self.setState({submitted:true});
+            sessionStorage.setItem('isLogin', response.data);
+            sessionStorage.setItem('userData',JSON.stringify(response.data.data));
+            sessionStorage.setItem('fName', response.data.data.firstName);
+            sessionStorage.setItem('token',JSON.stringify(response.data.data.token ));
+          
+
+            history.push("/");
+            console.log(response);
+            
+            console.log(sessionStorage.getItem('token'));
+          }
+          else if(response.data.status ==='ERROR'){
+            alert('Sai tên đăng nhập hoặc mật khẩu')
+            let errors={}
+            errors["name"] = "Sai tên đăng nhập hoặc mật khẩu";
+            errors["password"] = "Sai tên đăng nhập hoặc mật khẩu";
+            self.setState({errors: errors});
+          }
         })
         .catch(function (error) {
           console.log('Error ')
         })
+
       }
+      else{
+        alert('Xin điền thông tin đăng nhập')
+      }
+    }
   
     
 
@@ -92,10 +135,10 @@ class Login extends Component {
         
           <Container fluid className='container-fluid'  >
             <Row style={{margin:"0"}}>
-              <Col xs="6" id="ColLeft">
+              <Col sm="6" id="ColLeft">
                 
                 <Row >
-                  <Col xs="12" id="TopLeft">        
+                  <Col sm='12' xs="12" id="TopLeft">        
                   <Media  src ={showcasePic} fluid="false" id="loginShowcasePic"  />
 
                   </Col>
@@ -107,31 +150,36 @@ class Login extends Component {
                 </Row>  
               </Col>
             
-              <Col xs="6" >
+              <Col sm="6" >
                 <Row>
                   <Col xs="12">
-                    <Media id="loginLogo" src={logo} fluid="false" />
-                    <Jumbotron  id ="loginForm">
+                  <Link to="/"> <Media id="loginLogo" src={logo} fluid="false" /> </Link>
+                    <Jumbotron  id ="loginForm" >
                       <Container id="tempCont">
                         <Row id="RowJump">
                           <Col xs="8" id="loginFormLeftCol">
                             <h1 id ="dangnhapText"> Đăng Nhập </h1>
-                            <Form id ="loginFormGroup" >
+                            <Form onSubmit={this.handleSubmit} id ="loginFormGroup"  >
                               
                               <FormGroup id="emailFormGroup">
                                 <Label for="loginEmail">Tài khoản</Label>
                                 <Input type="text" name="text"  id="loginEmail" placeholder="Tên đăng nhập" value={this.state.username}  onChange={this.handleUsernameChange} />
+                                <span className="error">{this.state.errors["name"]}</span>
                               </FormGroup>
                               <FormGroup id="passwordFormGroup">
                                 <Label for="loginPassword">Mật khẩu</Label>
                                 <Input type="password" name="password" id="loginPassword" placeholder="Mật khẩu" value={this.state.password}  onChange={this.handlePasswordChange} />
+                                <span className="error">{this.state.errors["password"]}</span>
                               </FormGroup>
-                              <Button id="loginBtn" onClick={this.handleSubmit}>Đăng nhập</Button>
+                              <FormGroup className="col-md-12 col-sm-12" style={{margin:0,paddingLeft:30,paddingRight:30}} >
+                              <Button id="loginBtn" type="submit" onClick={this.handleSubmit}>Đăng nhập</Button>
+                              </FormGroup>
                              {/* <Link to="/register" className="btn btn-link">Register</Link>
                               */}
-                              <FormGroup id="forgetLink">
-                                <Link to="/register"> Quên mật khẩu </Link>
+                             {/* <FormGroup id="forgetLink">
+                                <Link to="#"> Quên mật khẩu </Link>
                               </FormGroup>
+                            */}
                               <FormGroup id="registerLink">
                                 <Link  to="/register" > Đăng ký tài khoản mới </Link>
                               </FormGroup>

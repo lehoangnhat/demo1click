@@ -26,19 +26,19 @@ class Footer extends Component {
         <Row id="FooterContainer" >
            
             
-            <Col xs="12">
+            <Col md="12">
             <Row id="TopFooter">
-                <Col xs="4">
-                    <Media id="FooterLogo" src={logo} fluid="false" />
+                <Col id="logoCol" md="3">
+                    <Media id="FooterLogo" src={logo} />
                 </Col>
 
-                <Col xs="2">
+                <Col id="UDCol" md="3">
                     <h5 id="TextUD">ỨNG DỤNG</h5>
-                    <Media id="imgAppstore" src={appstore}/>
-                    <Media id="imgGooglePlay"src ={ggplay}/> 
+                    <Media className="img-fluid" id="imgAppstore" src={appstore}/>
+                    <Media className="img-fluid" id="imgGooglePlay"src ={ggplay}/> 
                 </Col>
 
-                <Col xs="2" >
+                <Col id="HTCol" md="3" >
                     <h5 id="TextHoTro">HỖ TRỢ KHÁCH HÀNG</h5>
                     <Nav vertical>
                         <NavLink href="#">Trung tâm trợ giúp</NavLink>
@@ -47,21 +47,19 @@ class Footer extends Component {
                     </Nav>
                 </Col>
 
-                <Col xs="2">
+                <Col id="HTCol" md="3">
                     <h5 id="TextHoTro">VỀ ONECLICK</h5>
                     <Nav vertical>
-                        <NavLink  href="#">Giới thiều</NavLink>
+                        <NavLink  href="#">Giới thiệu</NavLink>
                         <NavLink  href="#">Tuyển dụng</NavLink>
                         <NavLink  href="#">Blog</NavLink>
                     </Nav>
                 </Col>
 
-                <Col xs="2">
-                    
-                </Col>
+                
             </Row>
             <Row >
-                <Col xs="12" id="about">
+                <Col md="12" id="about">
                     <p id="allRight">©2018 OneClick Inc, All Rights Reservered  </p>
                 </Col>
             </Row>

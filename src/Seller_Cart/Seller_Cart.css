@@ -1,0 +1,167 @@
+#cartContain {
+    padding:0;
+    margin:0;
+    padding-top :2%;
+    display:table;
+	table-layout:fixed;
+}
+
+#cartLeftLabel{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    font-size: 14px;
+    color:#303030;
+    text-align: justify;
+    text-transform: uppercase;
+
+    margin:2%;
+
+}
+
+#cartRightLabel{
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    font-size: 14px;
+    color:#303030;
+    text-align: justify;
+    text-transform: uppercase;
+   
+    margin:6%;
+}
+
+#cartContain .row{
+    padding:0;
+    margin:0;
+}
+#cartContain .col{
+    padding:0;
+    margin:0;
+}
+
+
+#jumboCartLeft {
+    min-width: 400px;
+    padding :0;
+    margin:0;
+    margin-left:4%;
+    margin-bottom: 2%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0,0,0, 0.1)
+}
+
+#jumboCartRight{
+    padding :0;
+    margin:0;
+    margin-right:3%;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0,0,0, 0.1);
+
+}
+
+
+#cartProduct{
+    padding: 2%;
+    border-bottom: 1px solid #E9E9E9
+}
+
+#cartProductImg{
+    width: 100px;
+    height: 108px;
+}
+#cartProductName{
+    margin-left:2%;
+    margin-top : 1%;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 18px;
+    color:#303030;
+    text-align: justify;
+    
+}
+
+#cartSellerName{
+    margin-left:2%;
+    margin-top:1.3%;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 14px;
+    color:#686868;
+    text-align: justify;
+}
+
+#cartRemoveText{
+    margin-left:2%;
+    margin-top:1.3%;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 14px;
+    color: red;
+    text-align: justify;
+}
+
+#cartPriceText{
+    margin-top:3.6%;
+    margin-right:5%;
+}
+
+#tongGiaText{
+    margin-left:5%;
+    margin-top:10%;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 14px;
+    color:#686868;
+    text-align: justify;
+}
+#totalNumb{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10%;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 24px;
+    color:#FEAF34;
+    text-align: justify;
+}
+#checkoutButton{
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:10%;
+    margin-bottom: 10%;
+    width: 70%;
+    border-radius: 5px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 14px;
+    color: #FEAF34;
+    text-align: center;
+    background: #303030;
+
+}
+
+#cartPrice{
+    margin-left:2%;
+    margin-top:1.3%;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    text-align: justify;
+    color:#FEAF34;
+}

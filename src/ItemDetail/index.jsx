@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import Header from '../component/Header';
-import Footer from '../component/Footer';
+
 
 import './ItemDetail.css';
 import Slider from "react-slick";
 import {history} from "../_helper/history"
 import data from '../data/data.json';
-import redshoe from '../img/redshoe.jpg'
 
+import axios from "axios";
+import ReactLoading from 'react-loading';
 import { 
     Media,
     BreadcrumbItem,
@@ -18,98 +18,82 @@ import {
     Button,
     Container, Jumbotron } from 'reactstrap';
 import Product from '../component/Product';
-import axios from 'axios'
+
+
+import { connect } from 'react-redux';
+import { addToCart } from '../_action/cartActions';
+
 class ItemDetail extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      products: [],
-      cart: [],
-      quantity: 1,
-      query:""
+      productsTemp: [],
+      isAdded:false,
     };
-    this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.handleQueryChange = this.handleQueryChange.bind(this);
+    this.handleAddAnimation = this.handleAddAnimation.bind(this);
+    
+  }
+
+ 
+
+  handleAddAnimation(){
+    this.setState({
+      isAdded: true
+    },
+    function() {
+      setTimeout(() => {
+        this.setState({
+          isAdded: false,
+          selectedProduct: {}
+        });
+      }, 2000);
+    });
   }
   getProducts() {
-        
-    this.setState({
-      products: data
-    });
-
-  }
-  componentWillMount() {
-    this.getProducts();
-  }
-
-  handleQueryChange(e) {
-    this.setState({ query : e.target.value })
-}
-
-handleSearch(e) {
-    e.preventDefault();
-    let self=this;
-    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
+    let sID = this.props.selected.id;
+    let self = this;
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/related/'+sID,
     {
-        params: {
-            query: this.state.query
-        }
+      params:{
+        page:1,
+        limit:20
+      }
     })
     .then(function (response) {
-        console.log(response.data.data.items);
-        self.setState({products : response.data.data.items,
-                        isSubmit: true
-        })
-        self.updateProducts(response.data.data.items)
+        console.log(response.data);
+        let data= response.data.data.items;
+        self.setState({
+          productsTemp: data
+        });
         
       })
       .catch(function (error) {
         console.log(error);
       });
 
-}
+    
 
-
-  handleAddToCart(selectedProducts) {
-    let cartItem = this.state.cart;
-    let productID = selectedProducts.id;
-    let productQty = selectedProducts.quantity;
-    if (this.checkProduct(productID)) {
-      console.log("hi");
-      let index = cartItem.findIndex(x => x.id == productID);
-      cartItem[index].quantity =
-        Number(cartItem[index].quantity) + Number(productQty);
-      this.setState({
-        cart: cartItem
-      });
-    } else {
-      cartItem.push(selectedProducts);
+  }
+  componentWillMount() {
+    this.getProducts();
+  }
+  componentDidMount(){
+    this.props.handleChangeState(false);
+    if(this.props.selected.length ===0){
+      history.push('/')
     }
-    this.setState({
-      cart: cartItem,
-      cartBounce: true
-    });
-  }
-  checkProduct(productID) {
-    let cart = this.state.cart;
-    return cart.some(function(item) {
-      return item.id === productID;
-    });
-  }
+}
+componentWillUnmount(){
+    this.props.handleChangeState(true);
+}
       render() {
-        let itemData = this.state.products
+        let itemData = this.state.productsTemp
         .map(product => {
           return (
             
               <Product 
-                key={product.id}
-                price={product.price}
-                name={product.name}
-                image={product.image}
-                id={product.id}
-                location ={product.location}
-                
+                product = {product}
+                handleSelected={this.props.handleSelected}
               />
             
           );  
@@ -126,6 +110,15 @@ handleSearch(e) {
           slidesToScroll: 1,
           initialSlide: 0,
           responsive: [
+            {
+              breakpoint: 1280,
+              settings: {
+                slidesToShow: 4,
+                slidesToScroll: 1,
+                infinite: true,
+                dots: true
+              }
+            },
             {
               breakpoint: 1024,
               settings: {
@@ -155,24 +148,28 @@ handleSearch(e) {
         
         let buyButton;
     
+                  
     if(!sessionStorage.getItem('token')){
       buyButton=
-        <Button onClick={() => history.push('/login') } > Đăng nhập để mua hàng </Button>
+        <Button id="detailBtn" onClick={() => history.push('/login') } > Đăng nhập để mua hàng </Button>
     }
     else{
       buyButton=
-      <Button onclick={this.props.addToCart}> Thêm vào giỏ hàng </Button>
+      <Button id="detailBtn" onClick={() => {
+        this.props.addToCart(this.props.selected);
+        this.handleAddAnimation();
+        
+      }
+      }> {!this.state.isAdded ? "Thêm vào giỏ hàng" : "✔ Đã thêm"}   </Button>
     }
+    const formatter = new Intl.NumberFormat('de-DE', {
+      style: 'currency',
+      currency: 'VND',
+      minimumFractionDigits: 0
+    })
         return (
           <Container fluid={"true"} id="DetailContainer" >
-            <Header
-            cartItems={this.state.cart}
-            handleSearch={this.handleSearch}
-            handleQueryChange={this.handleQueryChange}
-            query ={this.state.query}
-            
-            />
-
+          {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
             <Jumbotron id="topJumbo">
                     <Row>
                     <Col xs="12">
@@ -183,27 +180,28 @@ handleSearch(e) {
                     </Row>
                     <Row>
                       <Col xs="7">
-                        <Media src="this.props.location.state.image" alt="image" id ="thumbnailPic"/>
-                        <p>
-                        {this.props.location.state.description}
+                        <Media src={this.props.selected.images+'.jpg'} alt="image" id ="thumbnailPic"/>
+                        <p style={{paddingLeft:"5%"}}>
+                        {this.props.selected.description}
                         </p>
                        
                           
                       </Col>
 
                       <Col xs="5">
-                        <h2> {this.props.location.state.name} </h2>
-                        <h3> Giá {this.props.location.state.price} </h3>
-                        <h3> Địa chỉ {this.props.location.state.price} </h3>
+                        <h2> {this.props.selected.name} </h2>
+                        <h6> {this.props.selected.categoryID} </h6>
+                        <h3 style={{color:"#FEAF34"}}> {formatter.format(this.props.selected.price)} </h3>
+                        
                         {buyButton}
                       </Col>
                     </Row>
                     
 
                 </Jumbotron>
-                
+                <Jumbotron id="recommendJumbo">
                     <Row id ="recommendRow">
-                      <Col xs="12">
+                      <Col style={{padding:"1%",backgroundColor:"#FAFAFA"}} xs="12">
                         <Media>Sản phẩm tương tự </Media>
                       </Col>
                     </Row>
@@ -218,7 +216,7 @@ handleSearch(e) {
                       
                       </Col>
                     </Row>
-                <Footer/>
+              </Jumbotron>
 
                 
         </Container>
@@ -229,5 +227,16 @@ handleSearch(e) {
       }
     }
     
-    
-    export default ItemDetail;
+    function mapStateToProps(state, props) {
+      return {
+        products: state.products
+      };
+  }
+  
+  function mapDispatchToProps(dispatch) {
+      return {
+          addToCart: item => dispatch(addToCart(item))
+      }
+  }
+  
+    export default connect(mapStateToProps, mapDispatchToProps)(ItemDetail);
