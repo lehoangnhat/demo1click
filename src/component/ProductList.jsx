@@ -70,19 +70,20 @@ const customLabels = {
       this.setState({ pageOfItems });
     }
     componentDidMount(){
-      
+      console.log(this.props.priceMin)
     }
     render() {
     let view;
     
     let term = this.props.filterTerm;
-  
+    if(this.props.productsList.length!==0){
     view = (
       <Row id="ProductList">
         
         {this.state.pageOfItems
-       // .filter((product)=>product.name.includes(term) )
-        //.filter((product)=>product.price > 1000)
+        //.filter((product)=>product.name.includes(term) )
+        .filter((product)=> parseInt(product.price) > this.props.priceMin)
+        .filter((product)=> parseInt(product.price) < this.props.priceMax)
         .map((product,index) => 
                   <Product 
                     index ={index}
@@ -95,7 +96,15 @@ const customLabels = {
         
       </Row>
       );
-    
+    }
+    else{
+      view = (
+      <Row id="ProductList">
+        <NoResults/>
+      </Row>      
+      
+      )
+    }
     
     
   return (
