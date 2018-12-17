@@ -67,10 +67,11 @@ class RegisterPage extends Component {
         errors["password"] = "Xin điền mật khẩu";
       }
       
-      if(!this.refs.check_me.checked){
+    /*  if(!this.refs.check_me.checked){
         formIsValid = false;
         errors["checkbox"] = "Chọn đồng ý để tiếp tục";
       }
+      */
       this.setState({errors: errors});
       return formIsValid;
     }
