@@ -60,12 +60,6 @@ class RegisterPage extends Component {
         errors["name"] = "Xin điền tên đăng nhập";
       }
   
-      if(typeof username !== "undefined"){
-        if(!username.match(/^[a-zA-Z]+$/)){
-          formIsValid = false;
-          errors["name"] = "Chỉ chấp nhận kí tự";
-        }      	
-      }
   
     
       if(!password){
@@ -73,7 +67,7 @@ class RegisterPage extends Component {
         errors["password"] = "Xin điền mật khẩu";
       }
       
-      if(this.refs.check_me.checked !== true ){
+      if(!this.refs.check_me.checked){
         formIsValid = false;
         errors["checkbox"] = "Chọn đồng ý để tiếp tục";
       }
