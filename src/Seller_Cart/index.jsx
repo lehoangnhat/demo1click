@@ -32,6 +32,7 @@ import { cartCheckout } from '../_action/cartActions';
 import data from '../data/data.json';
 import ReactLoading from 'react-loading';
 import axios from "axios";
+import { history } from '../_helper';
 
 class Seller_Cart extends Component{
     constructor(props) {
@@ -81,7 +82,7 @@ class Seller_Cart extends Component{
             let pQuant = this.state.productQuantityList[i] - 1
             console.log(pQuant)
             axios({
-                url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
+                url: 'http://localhost:9997/api/product/'+pid,
                 method: 'put',
                 data:{
                     quantity: pQuant-1
@@ -104,11 +105,14 @@ class Seller_Cart extends Component{
     }
 
     handleCheckout(){
-        let token = JSON.parse(sessionStorage.getItem('token'));
+        history.push('/address')
+
+
+       /* let token = JSON.parse(sessionStorage.getItem('token'));
 
         let self = this;
         axios({
-        url: 'https://demo1clickapi.herokuapp.com/api/user/order',
+        url: 'http://localhost:9997/api/user/order',
         method: 'post',
         headers:{
             "x-access-token": token,
@@ -124,10 +128,12 @@ class Seller_Cart extends Component{
         }).then(function (response){
             //alert('Thành công');
             //self.props.cartCheckout();
-            self.handleDecreaseQuantity();
+            //self.handleDecreaseQuantity();
+
+
         });
 
-        
+        */
     }
 
     toggle() {

@@ -43,7 +43,7 @@ TfIdf.prototype.weights = function(items,term) {
     var results = [];
     var documents=[];
     var nameDocuments=[];
-    const nameMulti = 5;
+    const nameMulti = 100;
     var nameResults=[];
 
     var descDocuments=[];
@@ -90,6 +90,7 @@ TfIdf.prototype.weights = function(items,term) {
        // var nameResult = {weight:nameTfidf,items:items[i]}    
          
         nameResults.push(nameTfidf)
+        console.log('name: ' + nameDocuments[i] +' tf: '+  nameTfidf)
     }
     
     for(var i=0; i< items.length;i++){
@@ -111,11 +112,15 @@ TfIdf.prototype.weights = function(items,term) {
         //var result = {weight:tfidf,items:items[i]}    
          
         descResults.push(descTfidf)
+        console.log('desc: ' + descDocuments[i] +' tf: '+  descTfidf)
     }
 
     
     for(var i=0;i<items.length;i++){
         var sumRes = nameResults[i] + descResults[i];
+        if(nameResults[i] ===0){
+            sumRes = nameResults[i] + descResults[i]*(0.5);
+        } 
         var result = {weight:sumRes,items:items[i]}
 
         results.push(result);

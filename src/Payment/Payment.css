@@ -1,0 +1,73 @@
+#paymentPic{
+    width: 100%;
+    margin:0;
+    padding:0;
+    height: 100%;
+}
+
+#addressJumbo > div:nth-child(2) > div:nth-child(2) > div > div{
+    width:100%;
+    
+}
+#addressJumbo > div:nth-child(2) > div:nth-child(2) > div{
+    width:70%;
+    
+}
+#formATM{
+    display: inline-block;
+    text-align: center;
+    margin-top:5%;
+}
+#thanhtoanBtn{
+    background: #303030;
+   
+    border-radius: 5px; 
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: normal;
+    text-align: center;
+    overflow: hidden;
+    color: #FEAF34;
+}
+#thanhtoanBtnHolder{
+    text-align: center;
+    margin-top:5%;
+    display: inline-block;
+    margin-bottom:5%;
+}
+
+.progress-bar{
+    height: 5px;
+    background: #FEAF34;
+    margin:0;
+    padding:0;
+}
+.progress{
+    height: 5px;
+    margin:0;
+    padding:0;
+}
+#addressJumbo .col-sm-2, #addressJumbo .col-md-2 , #addressJumbo .col-md-4, #addressJumbo .col-sm-4{
+    margin:0;
+    padding:0;
+    padding-right:5px;
+    text-align: center
+}
+#addressJumbo .row{
+    margin:0;
+    padding:0
+}
+.paymentTab{
+    margin-top: 30px;
+    font-size: 14px;
+    margin-bottom:0px;
+    color:#686868
+}
+.paymentTabSelected{
+    margin-top: 30px;
+    font-size: 14px;
+    margin-bottom:0px;
+    color:#FEAF34
+}

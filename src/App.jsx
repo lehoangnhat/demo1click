@@ -9,6 +9,8 @@ import RegisterPage from './RegisterPage';
 import Seller_CreatePost from './Seller_CreatePost';
 import Seller_Cart from './Seller_Cart';
 import Dashboard from './Seller_Dashboard'
+import Address from './Address'
+import Payment from './Payment'
 
 import Header from './component/Header';
 import Footer from './component/Footer';
@@ -82,9 +84,6 @@ class App extends Component {
       method: 'get',
       }).then(function (response){
         tmpsize= response.data.length;
-       if(response.data.length>=10){
-              tmpsize = 10;
-            }
        for(var i=0;i<tmpsize;i++){
          tmpdata.push(response.data[i]);
        }
@@ -107,7 +106,7 @@ class App extends Component {
       loading:true
     })
     let self=this;
-    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
+    axios.get('http://localhost:9997/api/product/search',
     {
         params: {
             query: categoryName
@@ -115,10 +114,8 @@ class App extends Component {
     })
     .then(function (response) {
       let data = response.data.data.items; 
-      /*
-*/
-        console.log(data);
-        console.log(response.data.data.items);
+   
+      
         self.setState({
           products : response.data.data.items,
           loading:false      
@@ -141,6 +138,21 @@ class App extends Component {
   }
   
   handleChangeState(_isHome){
+    let tmpsize=0;
+    let tmpdata=[];
+    let self= this;
+    axios({
+      url: 'https://api.myjson.com/bins/zpkwk',
+      method: 'get',
+      }).then(function (response){
+        tmpsize= response.data.length;
+       for(var i=0;i<tmpsize;i++){
+         tmpdata.push(response.data[i]);
+       }
+       self.setState({
+        tmpSuggest:tmpdata
+      })
+      })
     this.setState({
       isHome : _isHome,
     })
@@ -156,10 +168,11 @@ class App extends Component {
       loading:true
     })
     let self=this;
-    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
+    axios.get('http://localhost:9997/api/product/search',
     {
         params: {
-            query: this.state.query
+            query: this.state.query,
+            limit: 40
         }
     })
     .then(function (response) {
@@ -191,6 +204,7 @@ class App extends Component {
         let finalResult = []
         for(var i=0;i<sortedResult.length;i++){
           finalResult.push(sortedResult[i].item);
+          console.log(sortedResult[i])
         }
        
         self.setState({
@@ -256,20 +270,37 @@ class App extends Component {
         let tempobj = {'name':_product.name,
                           'image':_product.images +'.jpg'
                       }; 
-        updatedObj.unshift(tempobj);
+
+        let findResultObj= updatedObj.find(x => (x.name === tempobj.name) && (x.image === tempobj.image) );
+        if(findResultObj === undefined){
+          if(updatedObj.length ===10){
+            updatedObj.pop();
+          }
+          updatedObj.unshift(tempobj);
+        }
+        else{
+          let tmpIndex = updatedObj.findIndex(x => (x.name === tempobj.name) && (x.image === tempobj.image) )
+          updatedObj.splice(tmpIndex, 1);
+          updatedObj.unshift(tempobj);
+        }
         
+     
+    /*   updatedObj.unshift(tempobj);
+  
+        
+
      
         updatedObj = updatedObj.filter((thing, index, self) =>
           index === self.findIndex((t) => (
-            t.place === thing.place && t.name === thing.name
+            t.image === thing.image && t.name === thing.name
           ))
         )
-
+*/
 
         axios({
           url: 'https://api.myjson.com/bins/zpkwk',
           method: 'put',
-          data: updatedObj
+          data:updatedObj
           
           
         }).then(function (response){
@@ -315,6 +346,11 @@ class App extends Component {
             <Route path="/createPost" render={(props) => <Seller_CreatePost {...props} loading={this.state.loading} handleChangeState={this.handleChangeState} />}/>
             <Route path="/cart" render={(props) => <Seller_Cart {...props} loading={this.state.loading} handleChangeState={this.handleChangeState}  /> }/>
             <Route path="/dashboard" render={(props) => <Dashboard {...props} loading={this.state.loading} handleChangeState={this.handleChangeState} handleSelected={this.handleSelected}  /> }/>
+            
+            <Route path="/address" render={(props) =><Address handleChangeState={this.handleChangeState}     />} />
+
+    
+            <Route path="/payment" render={(props) =><Payment handleChangeState={this.handleChangeState}     />} />
             {footerComp}
         </div>
       </Router>

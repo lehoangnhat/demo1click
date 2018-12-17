@@ -6,7 +6,8 @@ import './Seller_SearchResult.css'
 import ProductList from './component/ProductList';
 import axios from "axios";
 import { history } from './_helper';
-
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css'
 import {
     Row,
     Col,
@@ -30,7 +31,7 @@ class Seller_SearchResult extends Component{
         super(props);
         this.state = {
           products: this.props.productsList,
-          
+          priceRange: { min: 0, max: 5000000 },
         };
         
     }
@@ -45,14 +46,19 @@ class Seller_SearchResult extends Component{
     }
 
     render() {
+        const formatter = new Intl.NumberFormat('de-DE', {
+            style: 'decimal',
+            
+            minimumFractionDigits: 0
+          })
         return(
             
             <Container fluid id ="sellerContainer" >
-                {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+                {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={"10%"} width={"10%"} /> :  null}
                 <Row  id="productListRow"  >
-                <Col  xs="3" id="FilterCol">
+                <Col  sm="3" md="2" id="FilterCol">
 
-                    <Form id="producerFilter">
+                    {/*<Form id="producerFilter">
                         <Label for="exampleCheckbox">Filter 1</Label>
                         <hr style={{marginTop:0}}/>
                         <FormGroup check inline>
@@ -67,31 +73,33 @@ class Seller_SearchResult extends Component{
                         </Label>
                         </FormGroup>
                     </Form>
+        */}
                     <Form id="priceFilter">
-                        <Label >Filter 2</Label>
+                        <Label >Lọc theo giá</Label>
                         <hr style={{marginTop:0}}/>
-                        <FormGroup check inline>
                         
-                        <Label check>
-                            <Input type="checkbox" /> 3 - 10 triệu
-                        </Label>
-                        </FormGroup>
-                        <FormGroup check >
-                        <Label check>
-                            <Input type="checkbox" /> 10 - 20 triệu
-                        </Label>
-                        </FormGroup>
+                        <InputRange
+                
+                            maxValue={10000000}
+                            minValue={0}
+                            value={this.state.priceRange}
+                            onChange={priceRange => this.setState({ priceRange })}
+                            step={100000}
+                            formatLabel={value =>formatter.format(value) }
+                            />
+                    
                         
                     </Form>
                    
                 </Col>
                 
-                <Col  xs="9">
+                <Col  sm="9" md="8">
                     <Jumbotron id="resultJumbo">
                     <ProductList
                         productsList={this.props.productsList}
                         handleSelected={this.props.handleSelected}
-                        
+                        priceMin = {this.state.priceRange.min}
+                        priceMax = {this.state.priceRange.max}
                     />
                     
                     </Jumbotron>

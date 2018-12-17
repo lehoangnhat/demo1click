@@ -60,18 +60,18 @@ class RegisterPage extends Component {
         errors["name"] = "Xin điền tên đăng nhập";
       }
   
+     
   
     
       if(!password){
         formIsValid = false;
         errors["password"] = "Xin điền mật khẩu";
       }
-      
-    /*  if(!this.refs.check_me.checked){
+      var checkBox = document.getElementById("checkbox")
+      if(checkBox.checked !== true ){
         formIsValid = false;
         errors["checkbox"] = "Chọn đồng ý để tiếp tục";
       }
-      */
       this.setState({errors: errors});
       return formIsValid;
     }
@@ -99,11 +99,11 @@ class RegisterPage extends Component {
     handleSubmit(e) {
       e.preventDefault();
 
-      if(this.handleValidation()){
-        
       
+        
+      if(this.handleValidation()){
 
-      axios.post('https://demo1clickapi.herokuapp.com/api/user/register',{ 
+      axios.post('http://localhost:9997/api/user/register',{ 
         username: this.state.username,
         password: this.state.password,
         firstName: this.state.fname,
@@ -111,7 +111,9 @@ class RegisterPage extends Component {
         dob: this.state.dob
         },)
         .then(function (response) {
+          console.log(response.data)
           if(response.data.status ==='SUCCESS'){
+
             alert("Đăng ký thành công");
             history.push("/login");
           }
@@ -119,7 +121,9 @@ class RegisterPage extends Component {
         .catch(function (error) {
           console.log(error);
         });
+        
       }
+      
       else{
         alert("Xin điền đầy đủ thông tin")
       }
@@ -195,7 +199,7 @@ class RegisterPage extends Component {
                                 </FormGroup>
                                 <FormGroup style={{marginTop:"5%"}} check>
                                     <Label check>
-                                        <Input type="checkbox" ref="check_me" />{' '}
+                                        <Input type="checkbox" id="checkbox" ref="check_me" />{' '}
                                         Tôi đồng ý với điều khoản của website
                                     </Label>
                                     <span className="error">{this.state.errors["checkbox"]}</span>

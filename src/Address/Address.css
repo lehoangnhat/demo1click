@@ -1,0 +1,44 @@
+#addressPic{
+    width: 100%;
+    margin:0;
+    padding:0;
+}
+
+#addressJumbo{
+    margin:0;
+    padding:0;
+    width: 68%;
+    background:#FFFFFF;
+    margin-top:3%;
+    margin-left:15%;
+    margin-bottom:3%;
+    stroke: solid #C4C4C4
+}
+
+#addressContain .row{
+    margin:0;
+    padding:0
+
+}
+#addressForm{
+    padding:5%;
+}
+
+#addressBtnHolder{
+    text-align: center;
+    margin-top:10%;
+}
+#addressBtn{
+    width:50%;
+    background: #303030;
+   
+    border-radius: 5px; 
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: normal;
+    text-align: center;
+    overflow: hidden;
+    color: #FEAF34;
+}

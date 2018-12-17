@@ -12,7 +12,6 @@
 
 #productListRow{
     margin:0;
-    width: 100%;
     
     
 }
@@ -45,6 +44,7 @@
     margin-left:3%;
     background: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 200px;
 }
 #priceFilter{
     padding-left: 8%;
@@ -55,6 +55,7 @@
     margin-left:3%;
     background: #FFFFFF;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 150px;
 }
 
 #sellerContainer #loading{
@@ -64,4 +65,16 @@
     top: 50vh;
     left: 45%;
     
+}
+
+#priceFilter > div{
+    width: 100%;
+    margin-top:10%;
+}
+
+.input-range{
+    width: 20px;
+}
+#priceFilter > div > span.input-range__label.input-range__label--max{
+    margin-right:20px
 }
