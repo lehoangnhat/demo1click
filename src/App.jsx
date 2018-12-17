@@ -106,7 +106,7 @@ class App extends Component {
       loading:true
     })
     let self=this;
-    axios.get('http://localhost:9997/api/product/search',
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
     {
         params: {
             query: categoryName
@@ -168,7 +168,7 @@ class App extends Component {
       loading:true
     })
     let self=this;
-    axios.get('http://localhost:9997/api/product/search',
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/search',
     {
         params: {
             query: this.state.query,

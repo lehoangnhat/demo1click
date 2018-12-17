@@ -31,7 +31,7 @@ import categoryData from './data/category.json';
 import { connect } from 'react-redux';
 import { removeFromCart } from './_action/cartActions';
 import { cartCheckout } from './_action/cartActions';
-import Suggestions from './component/Suggestion'
+
 
 import Autosuggest from 'react-autosuggest';
 import AutosuggestHighlightMatch from 'autosuggest-highlight/match';
@@ -163,7 +163,7 @@ class Home extends Component {
 
   }
   getFeatureProduct(){
-    axios.get('http://localhost:9997/api/product/new',
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/new',
     {
       
     })
