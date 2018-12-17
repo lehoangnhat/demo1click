@@ -82,7 +82,7 @@ class Seller_Cart extends Component{
             let pQuant = this.state.productQuantityList[i] - 1
             console.log(pQuant)
             axios({
-                url: 'http://localhost:9997/api/product/'+pid,
+                url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
                 method: 'put',
                 data:{
                     quantity: pQuant-1
