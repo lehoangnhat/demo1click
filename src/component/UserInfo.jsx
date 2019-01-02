@@ -210,7 +210,7 @@ class UserInfo extends Component{
                                 </Row>
 
                                 <FormGroup>
-                                  <Label>Username</Label>
+                                  <Label>Email</Label>
                                   
                                   <Input type="text" name="email"   value={this.state.email} onChange={this.handleEmailChange} />
                                   
