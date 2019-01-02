@@ -64,7 +64,10 @@ class App extends Component {
       selectedProduct :"",
       products:[],
       loading: false,
-      tmpSuggest:[]
+      tmpSuggest:[],
+      buyQuantity:[],
+      address:'',
+      note:'',
     };
     this.handleChangeState = this.handleChangeState.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
@@ -73,6 +76,8 @@ class App extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.handleCategoryClick = this.handleCategoryClick.bind(this);
     this.handleQueryChangeTemp= this.handleQueryChangeTemp.bind(this);
+    this.handleCartQuantity = this.handleCartQuantity.bind(this);
+    this.handleAddressNote = this.handleAddressNote.bind(this);
   }
 
   componentDidMount(){
@@ -92,6 +97,19 @@ class App extends Component {
       })
       })
     
+  }
+
+  handleAddressNote(address,note){
+    this.setState({
+      address:address,
+      note: note
+    })
+  }
+
+  handleCartQuantity(quantityList){
+    this.setState({
+      buyQuantity:quantityList
+    })
   }
 
   handleQueryChangeTemp(value){
@@ -134,7 +152,7 @@ class App extends Component {
   handleLogout(e){
     e.preventDefault();
     sessionStorage.clear();
-    
+   
   }
   
   handleChangeState(_isHome){
@@ -176,7 +194,7 @@ class App extends Component {
         }
     })
     .then(function (response) {
-        
+
       
         let resultArr=[];
   
@@ -271,10 +289,14 @@ class App extends Component {
                           'image':_product.images +'.jpg'
                       }; 
 
-        let findResultObj= updatedObj.find(x => (x.name === tempobj.name) && (x.image === tempobj.image) );
+        let findResultObj= updatedObj.find(x =>(x.name === tempobj.name) && (x.image === tempobj.image) );
+  
         if(findResultObj === undefined){
-          if(updatedObj.length ===10){
-            updatedObj.pop();
+          
+          if(updatedObj.length >= 10){
+            
+            updatedObj.splice(10);
+           
           }
           updatedObj.unshift(tempobj);
         }
@@ -323,6 +345,7 @@ class App extends Component {
         query ={this.state.query}
         handleLogout={this.handleLogout}
         handleQueryChangeTemp={this.handleQueryChangeTemp}
+        loading={this.state.loading}
       />);
 
       footerComp = (
@@ -344,13 +367,13 @@ class App extends Component {
             <Route path="/detail" render={(props) => <ItemDetail {...props} loading={this.state.loading} productsList={this.state.products} selected={this.state.selectedProduct} handleSelected={this.handleSelected} handleChangeState={this.handleChangeState}   /> } />
             
             <Route path="/createPost" render={(props) => <Seller_CreatePost {...props} loading={this.state.loading} handleChangeState={this.handleChangeState} />}/>
-            <Route path="/cart" render={(props) => <Seller_Cart {...props} loading={this.state.loading} handleChangeState={this.handleChangeState}  /> }/>
+            <Route path="/cart" render={(props) => <Seller_Cart {...props} loading={this.state.loading} handleChangeState={this.handleChangeState} handleCartQuantity={this.handleCartQuantity} /> }/>
             <Route path="/dashboard" render={(props) => <Dashboard {...props} loading={this.state.loading} handleChangeState={this.handleChangeState} handleSelected={this.handleSelected}  /> }/>
             
-            <Route path="/address" render={(props) =><Address handleChangeState={this.handleChangeState}     />} />
+            <Route path="/address" render={(props) =><Address handleChangeState={this.handleChangeState} handleAddressNote={this.handleAddressNote}     />} />
 
     
-            <Route path="/payment" render={(props) =><Payment handleChangeState={this.handleChangeState}     />} />
+            <Route path="/payment" render={(props) =><Payment handleChangeState={this.handleChangeState}  buyQuantity={this.state.buyQuantity} address={this.state.address} note={this.state.note}  />} />
             {footerComp}
         </div>
       </Router>

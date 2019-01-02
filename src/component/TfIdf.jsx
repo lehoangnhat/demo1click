@@ -90,7 +90,7 @@ TfIdf.prototype.weights = function(items,term) {
        // var nameResult = {weight:nameTfidf,items:items[i]}    
          
         nameResults.push(nameTfidf)
-        console.log('name: ' + nameDocuments[i] +' tf: '+  nameTfidf)
+        
     }
     
     for(var i=0; i< items.length;i++){
@@ -112,7 +112,7 @@ TfIdf.prototype.weights = function(items,term) {
         //var result = {weight:tfidf,items:items[i]}    
          
         descResults.push(descTfidf)
-        console.log('desc: ' + descDocuments[i] +' tf: '+  descTfidf)
+        
     }
 
     

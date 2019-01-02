@@ -134,11 +134,6 @@
     /*
     126
     */
-    #HomeLocationSelect{
-        position: relative;
-        width: 9vw;
-        
-    }
     #HomeSearchProductName{
         position: relative;
         left: 0.2vw;
@@ -269,7 +264,7 @@
         width: 280px;
         border: 1px solid #aaa;
         background-color: #fff;
-        font-family: Helvetica, sans-serif;
+        font-family: 'Roboto', sans-serif;
         font-weight: 300;
         font-size: 16px;
         border-bottom-left-radius: 4px;
@@ -344,4 +339,15 @@
 
 #NavHeaderSearch .react-autosuggest__input{
     width: 100%;
+    
 }
+.loader .react-autosuggest__input{
+    background-color: #ffffff;
+    background-image: url("http://loadinggif.com/images/image-selection/3.gif");
+    background-size: 25px 25px;
+    background-position:right center;
+    background-repeat: no-repeat;
+}
+
+
+  

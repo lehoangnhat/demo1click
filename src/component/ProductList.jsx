@@ -86,6 +86,7 @@ const customLabels = {
         .filter((product)=> parseInt(product.price) < this.props.priceMax)
         .map((product,index) => 
                   <Product 
+                    key={index}
                     index ={index}
                     product={product}
                     handleSelected={this.props.handleSelected}

@@ -266,11 +266,11 @@ class Header extends Component {
     let dangtinCompo;
       if(sessionStorage.getItem('isLogin'))
       dangtinCompo =  
-        <Link to='/createPost'>Đăng tin bán hàng </Link>
+        <Link to='/createPost'>Đăng tin bán hàng</Link>
       
       else{
         dangtinCompo=
-        <Link to='/login' onClick={()=>alert('Vui lòng đăng nhập')}>Đăng tin bán hàng </Link>
+        <Link to='/login' onClick={()=>alert('Vui lòng đăng nhập')}>Đăng tin bán hàng</Link>
       }
 
       return (
@@ -288,11 +288,9 @@ class Header extends Component {
                <Form onSubmit={this.handleSearch}>
                 <Row style={{padding:0, margin:0}}>
                     
-                    <div className="col-md-7 offset-md-2">
+                    <div className={this.props.loading?"col-md-7 offset-md-2 loader": "col-md-7 offset-md-2"}>
                         
-                      {/*  <Input ref="searchBox" type="search" id="searchProductName" placeholder="Tìm sản phẩm"
-                            value={this.props.query} onChange={this.handleQueryChange}  onKeyPress={this.handleKeyPress} />
-                        */}
+                      
                         <Autosuggest 
                         suggestions={suggestions}
                         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -303,7 +301,7 @@ class Header extends Component {
 
                         />
                     </div>
-                    <div className="col-md-3">
+                    <div className="col-md-3 col-sm-3">
                         
                         <Button id ="HeaderSearchBtn" onClick={this.handleSearch} >Tìm kiếm</Button>
                         

@@ -9,7 +9,10 @@ export default function cart(state = initialState.cart, action) {
         case 'ADD':
             //If 'ADD' from 'cartActions.js', spread the previous state, and
             //add the new item. This will result in a new array with an added item
-            return [...state, action.item];
+            let index = state.findIndex(el => el.id == action.item.id)
+            if(index == -1)
+                return [...state, action.item]
+            return [...state];
         case 'REMOVE':
             //If 'REMOVE' from 'cartActions.js', return a new array without the
             //item with the ID we clicked on. filter returns a new array, don't

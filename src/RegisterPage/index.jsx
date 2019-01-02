@@ -24,6 +24,8 @@ import showcasePic from '../img/WebShowcaseProjectPresentation.png';
 import axios from 'axios';
 import { history } from '../_helper';
 
+
+
 class RegisterPage extends Component {
     constructor(probs) {
       super(probs); 
@@ -51,6 +53,8 @@ class RegisterPage extends Component {
 
       let username = this.state.username;
       let password = this.state.password;
+      let fname = this.state.fname;
+      let lname = this.state.lname;
       let errors = {};
       let formIsValid = true;
   
@@ -67,6 +71,17 @@ class RegisterPage extends Component {
         formIsValid = false;
         errors["password"] = "Xin điền mật khẩu";
       }
+
+      if(!fname){
+        formIsValid = false;
+        errors["fname"] = "Xin điền tên";
+      }
+
+      if(!lname){
+        formIsValid = false;
+        errors["lname"] = "Xin điền họ";
+      }
+
       var checkBox = document.getElementById("checkbox")
       if(checkBox.checked !== true ){
         formIsValid = false;
@@ -116,6 +131,11 @@ class RegisterPage extends Component {
 
             alert("Đăng ký thành công");
             history.push("/login");
+          }
+          else if(response.data.status === "ERROR"){
+            if(response.data.data.code ==="USERNAME_EXIST"){
+            alert("Tài khoản đã tồn tại")
+            }
           }
         })
         .catch(function (error) {
@@ -179,14 +199,14 @@ class RegisterPage extends Component {
                                     <FormGroup>
                                       <Label >Họ</Label>
                                       <Input type="text" name="lname" id="registerLname" value={this.state.lname} onChange={this.handleLnameChange}/>
-                                      
+                                      <span className="error">{this.state.errors["lname"]}</span>
                                     </FormGroup>
                                   </Col>
                                   <Col xs={6}>
                                     <FormGroup>
                                       <Label >Tên</Label>
                                       <Input type="text" name="fname" id="registerFname" value={this.state.fname} onChange={this.handleFnameChange} />
-                                      
+                                      <span className="error">{this.state.errors["fname"]}</span>
                                     </FormGroup>
                                   </Col>
                                 </Row>

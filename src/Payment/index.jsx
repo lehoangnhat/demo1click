@@ -29,7 +29,7 @@ import {
   import { connect } from 'react-redux';
   import { removeFromCart } from '../_action/cartActions';
   import { cartCheckout } from '../_action/cartActions';
-let userData= JSON.parse(sessionStorage.getItem('userData'));
+
 
 class Payment extends Component {
     constructor(props) {
@@ -46,20 +46,119 @@ class Payment extends Component {
         focused: '',
         formData: null,
         sdt:'',
-        address:'',
-        note:'',
-
-        showATM:false
+        address:this.props.address,
+        note:this.props.note,
+        productIdList:[],
+        productQuantityList:[],
+        buyQuantity:this.props.buyQuantity,
+        showATM:false,
+        listBuy:[]
       }
-      this.handleRadioButton = this.handleRadioButton.bind(this)
+      this.handleRadioButton = this.handleRadioButton.bind(this);
+      this.validateForm = this.validateForm.bind(this);
+      this.handleDecreaseQuantity = this.handleDecreaseQuantity.bind(this);
+      this.handleSendAddress = this.handleSendAddress.bind(this)
+     
+    }
+    validateForm(formId)
+    {
+        var inputs, index;
+        var form=document.getElementById(formId);
+        inputs = form.getElementsByTagName('input');
+        console.log(inputs)
+        for (index = 0; index < inputs.length; ++index) {
+            // deal with inputs[index] element.
+            if(inputs[index].name!='issuer'){
+                if (inputs[index].value==null || inputs[index].value=="")
+                {
+                 
+                    return false;
+                }
+            }
+        }
+        return true
     }
 
     componentDidMount(){
         this.props.handleChangeState(false);
+        let tempTotal =0;
+        let tmpListID =[];
+        let tmpQList = [];
+        let tmpBuyList =[];
         
+        this.props.cart.map(( item, index) => {
+            tempTotal = tempTotal + parseInt(item.price);
+            tmpListID.push(item.id);
+            tmpQList.push(item.quantity);
+            tmpBuyList.push(item)
+        });
+        
+        this.setState({
+            totalPrice: tempTotal,
+            productIdList: tmpListID,
+            listBuy:tmpBuyList,
+            productQuantityList:tmpQList
+            
+        })
     }
     componentWillUnmount(){
         this.props.handleChangeState(true);
+    }
+
+    handleSendAddress(){
+        console.log('send Address')
+        let token = JSON.parse(sessionStorage.getItem('token'));
+
+        let self = this;
+        axios({
+        url: 'https://demo1clickapi.herokuapp.com/api/user/order',
+        method: 'post',
+        headers:{
+            "x-access-token": token,
+        },
+        data:{
+            productIDs:self.state.listBuy,
+            note:self.state.note,
+            shippingAddress:self.state.address
+        }
+        
+        
+        
+        }).then(function (response){
+            console.log(response.data)
+            //self.props.cartCheckout();
+            //self.handleDecreaseQuantity();
+
+
+        }).catch(function (error) {
+            console.log(error);
+          });
+    }
+
+    handleDecreaseQuantity(){
+        console.log(this.state.productIdList)
+        let self=this;
+        for(var i=0;i<this.state.productIdList.length;i++){
+            
+            let pid = this.state.productIdList[i];
+            
+            let pQuant = parseInt(this.state.productQuantityList[i]) - parseInt(this.state.buyQuantity[i])
+            console.log(pQuant)
+            axios({
+                url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
+                method: 'put',
+                data:{
+                    quantity:pQuant
+                }
+                
+                
+                
+                }).then(function (response){
+                    
+                });
+        }
+        alert('Thanh toán thành công')
+        self.props.cartCheckout();
     }
 
     handleCallback = ({ issuer }, isValid) => {
@@ -89,6 +188,10 @@ class Payment extends Component {
       handleSubmit = e => {
         e.preventDefault();
         if(this.state.showATM==true){
+            if(!this.validateForm('tmpForm')){
+                alert('Xin điền đầy đủ thông tin')
+            }
+        else{
         const { issuer } = this.state;
         const formData = [...e.target.elements]
           .filter(d => d.name)
@@ -100,12 +203,16 @@ class Payment extends Component {
         this.setState({ formData });
         this.form.reset();
         }
+    }
         else{
+            
+            this.handleDecreaseQuantity();
+            this.handleSendAddress();
+         // this.props.cartCheckout();
             
         }
 
-        this.props.cartCheckout();
-        alert('Thanh toán thành công')
+        
       };
       handleRadioButton(value) {
         this.setState({
@@ -117,7 +224,11 @@ class Payment extends Component {
         const { name, number, expiry, cvc, focused, issuer, formData } = this.state;
         let formATM;
         if(!this.state.showATM) {
-            formATM = <div> </div>
+            formATM = <div id="thanhtoanBtnHolder">
+            <Button id="thanhtoanBtn" onClick={this.handleSubmit}>
+                Thanh toán
+            </Button>
+        </div>
           }
         else if(this.state.showATM) {
         
@@ -132,7 +243,7 @@ class Payment extends Component {
             callback={this.handleCallback}
             issuer="visa"
         />
-        <form ref={c => (this.form = c)} onSubmit={this.handleSubmit}>
+        <form ref={c => (this.form = c)} onSubmit={this.handleSubmit} id="tmpForm">
             <div className="form-group" style={{marginTop:'2%'}}>
             <input
                 type="tel"
@@ -184,8 +295,13 @@ class Payment extends Component {
             </div>
             </div>
             <input type="hidden" name="issuer" value={issuer} />
-            
+            <div id="thanhtoanBtnHolder" className="form-actions">
+                <button className="btn btn-primary btn-block" id="thanhtoanBtn" onClick={this.handleSubmit}>
+                    Thanh toán
+                </button>
+            </div>
         </form>
+        
         </div>
         )
     }
@@ -237,11 +353,8 @@ class Payment extends Component {
 
 
                         {formATM}
-                        <div id="thanhtoanBtnHolder">
-                            <Button id="thanhtoanBtn" type="submit" onClick={this.handleSubmit}>
-                                Thanh toán
-                            </Button>
-                        </div>
+                        
+                        
                         </Col>
                     </Row>
 

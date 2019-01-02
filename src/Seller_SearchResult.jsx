@@ -54,7 +54,7 @@ class Seller_SearchResult extends Component{
         return(
             
             <Container fluid id ="sellerContainer" >
-                {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={"10%"} width={"10%"} /> :  null}
+               
                 <Row  id="productListRow"  >
                 <Col  sm="3" md="2" id="FilterCol">
 

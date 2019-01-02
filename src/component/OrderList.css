@@ -1,0 +1,14 @@
+#orderImg{
+    width:50%;
+    margin-top:2%;
+}
+#orderID{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+}
+#orderName{
+    margin-left:5%;
+}

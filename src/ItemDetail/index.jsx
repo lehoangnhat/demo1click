@@ -54,13 +54,10 @@ class ItemDetail extends Component{
     let self = this;
     axios.get('https://demo1clickapi.herokuapp.com/api/product/related/'+sID,
     {
-      params:{
-        page:1,
-        limit:20
-      }
+    
     })
     .then(function (response) {
-        console.log(response.data);
+        
         let data= response.data.data.items;
         self.setState({
           productsTemp: data
@@ -76,22 +73,45 @@ class ItemDetail extends Component{
   }
   componentWillMount() {
     this.getProducts();
+
   }
   componentDidMount(){
     this.props.handleChangeState(false);
     if(this.props.selected.length ===0){
       history.push('/')
     }
+    else{
+      
+   /*   let creID = this.props.selected.creatorID;
+      axios({
+        url: 'http://localhost:9997/api/user/'+creID,
+        method: 'get'
+        
+
+        
+        }).then(function (response){
+          console.log('userInfo')
+            console.log(response)
+            
+        });
+*/
+    }
+    
+
+    
+
+
 }
 componentWillUnmount(){
     this.props.handleChangeState(true);
 }
       render() {
         let itemData = this.state.productsTemp
-        .map(product => {
+        .map((product,index) => {
           return (
             
-              <Product 
+              <Product
+                index={index} 
                 product = {product}
                 handleSelected={this.props.handleSelected}
               />
@@ -167,22 +187,32 @@ componentWillUnmount(){
       currency: 'VND',
       minimumFractionDigits: 0
     })
+    let tmpString = this.props.selected.description;
+
+    let label1Click;
+    if(this.props.selected.featured!==null && this.props.selected.featured === true ){
+      
+      label1Click = <h4> Sản phẩm của 1Click </h4>
+    }
+    else{
+      label1Click=null
+    }
         return (
           <Container fluid={"true"} id="DetailContainer" >
-          {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+          
             <Jumbotron id="topJumbo">
                     <Row>
                     <Col xs="12">
                     <Breadcrumb>
-                        <BreadcrumbItem active>Home</BreadcrumbItem>
+                        <BreadcrumbItem active>Thông tin chi tiết</BreadcrumbItem>
                     </Breadcrumb>
                     </Col>
                     </Row>
                     <Row>
                       <Col xs="7">
                         <Media src={this.props.selected.images+'.jpg'} alt="image" id ="thumbnailPic"/>
-                        <p style={{paddingLeft:"5%"}}>
-                        {this.props.selected.description}
+                        <p style={{whiteSpace:"pre-wrap",paddingLeft:"5%",maringTop:"10%"}}>
+                        {String(tmpString).replace(/; /g, "\n")}
                         </p>
                        
                           
@@ -194,6 +224,10 @@ componentWillUnmount(){
                         <h3 style={{color:"#FEAF34"}}> {formatter.format(this.props.selected.price)} </h3>
                         
                         {buyButton}
+
+                        <div style={{marginTop:"5%"}}>
+                          {label1Click}
+                        </div>
                       </Col>
                     </Row>
                     

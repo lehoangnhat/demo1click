@@ -35,10 +35,9 @@ import { history } from '../_helper';
 import ReactDropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import ReactLoading from 'react-loading';
-const options = [
-    'one', 'two', 'three'
-  ]
 
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css' 
 
 class Seller_CreatePost extends Component{
     
@@ -50,13 +49,13 @@ class Seller_CreatePost extends Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleImageChange = this.handleImageChange.bind(this);
         this.handleClickCategory = this.handleClickCategory.bind(this);
+        this.hanldePostForm = this.hanldePostForm.bind(this);
         
         this.handleChange=this.handleChange.bind(this);
         this.state = {
             productName:'',
             productPrice:'',
             productQuantity:1,
-            producer:'',
             tags: [],
             selectedCategory:'',
             imgUrl:'',
@@ -69,23 +68,21 @@ class Seller_CreatePost extends Component{
             suggestions: [
                 { id: 1, name: "Điện thoại" },
                 { id: 2, name: "Sony" },
-                { id: 3, name: "Nike" },
+                { id: 3, name: "Nokia" },
                 { id: 4, name: "Máy tính" },
                 { id: 5, name: "Giày dép" }
             ],
-            category:[
-                { id: 1, name: "Điện thoại" },
-                { id: 2, name: "Quần áo" },
-                { id: 3, name: "Giày dép" },
-                { id: 4, name: "Phụ kiện" }
-            ],
+            category:[],
+
+            loading:false,
+            errors:{}
         };
         
     }
-    handleClickCategory(e,item){
-        e.preventDefault();
+    handleClickCategory(option){
+       
         this.setState({
-            selectedCategory: item.name
+            selectedCategory: option.value
         })
 
         
@@ -102,17 +99,16 @@ class Seller_CreatePost extends Component{
     }
 
     componentDidMount(){
-        axios.get('https://demo1clickapi.herokuapp.com/api/category/search',
+        let self=this;
+        axios.get('http://localhost:9997/api/category/search',
     {
-        params: {
-            query: '1',
-            limit: 1,
-            page:10,
-        }
+
     })
     .then(function (response) {
-        console.log("cate")
-        console.log(response.data)
+        for(var i =0; i<response.data.data.items.length;i++){
+            self.state.category.push(response.data.data.items[i].name)
+        }
+        
     })
         this.props.handleChangeState(false);
         
@@ -159,8 +155,48 @@ class Seller_CreatePost extends Component{
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
-    handleSubmit(e){
-        e.preventDefault();
+
+    handleValidation(){
+        let {productName,productPrice,tags,selectedCategory,imgUrl} = this.state;
+
+        let errors = {};
+        let formIsValid = true;
+    
+        //Name
+        if(!productName){
+          formIsValid = false;
+          errors["name"] = "Xin điền tên mặt hàng";
+        }
+    
+      
+        if(!productPrice){
+          formIsValid = false;
+          errors["price"] = "Xin điền giá";
+        }
+
+        if(!selectedCategory){
+            formIsValid = false;
+            errors["category"] = "Xin chọn danh mục";
+        }
+
+        if(!imgUrl){
+            formIsValid = false;
+            errors["img"] = "Xin thêm hình";
+        }
+        
+        this.setState({errors: errors});
+        return formIsValid;
+      }
+
+
+    hanldePostForm(){
+
+        if(this.handleValidation()){
+
+        this.setState({
+            loading:true
+        })
+
         let self = this;
         let file = this.state.file;
         let formData = new FormData();
@@ -174,24 +210,23 @@ class Seller_CreatePost extends Component{
             "Authorization": "Client-ID "+clientID
             }
             }).then(function(response) {
-                console.log(response.data);
                 if(response.data.success === true){
                 self.setState({
                     imgUrl:response.data.data.link
                 })
-                console.log(self.state.imgUrl);
+               
                 let token = JSON.parse(sessionStorage.getItem('token'));
                 
                 
                 let productName = self.state.productName;
                 let productPrice = self.state.productPrice;
-                let productQuantity = self.state.productQuantity;
+                let productQuantity = parseInt(self.state.productQuantity);
                 let imgUrl = self.state.imgUrl;
                 let producer = self.state.producer
-                let tag = self.state.tag
+                let tag = self.state.tags
                 let category = self.state.selectedCategory;
                 let description = self.state.description;
-                axios.post("https://demo1clickapi.herokuapp.com/api/user/product",
+                axios.post("http://localhost:9997/api/user/product",
                 {
                     name: productName,
                     price:productPrice,
@@ -211,13 +246,14 @@ class Seller_CreatePost extends Component{
                     }
                 }
                 ).then(function(response) {
-                    console.log("response API")
-                    console.log(response.data)
+                    
                     if(response.data.status ==='SUCCESS'){
                         alert('Thành công');
                         document.getElementById("createPostForm").reset();
                         self.setState({
-                            imagePreviewUrl:""
+                            imagePreviewUrl:"",
+                            loading:false,
+                            tags:[]
                         })
                     }
                 }).catch(function(error) {
@@ -228,6 +264,34 @@ class Seller_CreatePost extends Component{
             }).catch(function(error) {
                 console.log(error);
             });
+        }
+        else{
+            alert("Xin điền đầy đủ thông tin")
+        }
+    }
+
+    handleSubmit(e){
+        e.preventDefault();
+        this.hanldePostForm();
+        
+       /* confirmAlert({
+            title: 'Xác nhận',
+            message: 'Bạn chắc chắn chứ?',
+            buttons: [
+              {
+                label: 'Có',
+                onClick: ()=>
+              },
+              {
+                label: 'Không',
+                onClick: ()=> null
+              }
+            ]
+          })
+          *
+
+
+        
         
         
           /* axios({
@@ -267,7 +331,7 @@ class Seller_CreatePost extends Component{
         }
         return (
             <Container id="createPostContainer" fluid >
-               {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+               
                 
                 <Jumbotron id="jumboCreatePost">
                 
@@ -284,24 +348,19 @@ class Seller_CreatePost extends Component{
                             <Input type="text" name="productName" id="ProductNameBox" placeholder="Nhập tên sản phẩm " onChange={this.handleChange} />
                             </FormGroup>
                             <Row form>
-                                <Col xs={4}>
+                                <Col xs={6}>
                                     <FormGroup>
                                     <Label for="price">Giá bán</Label>
                                     <Input type="text" name="productPrice" id="createPostPriceBox" placeholder="VND" onChange={this.handleChange}/>
                                     </FormGroup>
                                 </Col>
-                                <Col xs={4}>
+                                <Col xs={6}>
                                     <FormGroup>
                                     <Label for="quantity">Số lượng</Label>
                                     <Input type="text" name="productQuantity" id="createPostQuantityBox" placeholder="1 " onChange={this.handleChange}/>
                                     </FormGroup>
                                 </Col>
-                                <Col xs={4}>
-                                    <FormGroup>
-                                    <Label for="producer">Nhà sản xuất</Label>
-                                    <Input type="text" name="producer" id="createPostProducerBox" placeholder="Sony" onChange={this.handleChange}/>
-                                    </FormGroup>  
-                                </Col>
+                                
                             </Row>
                         {/*
                             <FormGroup>
@@ -320,20 +379,9 @@ class Seller_CreatePost extends Component{
                             </FormGroup>
                         */}
 
-                        <ReactDropdown id="listCategory" options={options} onChange={this._onSelect} value="0" placeholder="Select an option" />
-                       {/* <ListGroup id="listCategory">
-                            
-                        
-                            {   this.state.category.map( item=>
-                               <ListGroupItem tag="button" onClick={(e)=>this.handleClickCategory(e,item)}>
-                                {item.name}
-                                </ListGroupItem>
-                            )}
-                           
-                           
-                        </ListGroup>
-                        */} 
-                            <Input type="file" name="file" onChange={this.handleImageChange} />
+                        <ReactDropdown id="listCategory" options={this.state.category} onChange={this.handleClickCategory} value={this.state.selectedCategory} placeholder="Chọn danh mục" />
+                       
+                            <Input type="file" name="file" style={{marginTop:"5%"}} onChange={this.handleImageChange} />
                             <Container id="imgPreview">
                                 {imagePreview}
                             </Container>
@@ -341,14 +389,16 @@ class Seller_CreatePost extends Component{
                                 tags={this.state.tags}
                                 suggestions={this.state.suggestions}
                                 handleDelete={this.handleDelete.bind(this)}
-                                handleAddition={this.handleAddition.bind(this)} />
+                                handleAddition={this.handleAddition.bind(this)}
+                                allowNew="true"
+                                />
 
                             <FormGroup style={{marginTop:"2%"}}>
                                 <Label >Mô tả sản phẩm</Label>
                                 <Input type="textarea" name="description" id="description" onChange={this.handleChange} />
                             </FormGroup>
 
-                            <Button id="createPostBtn" onClick={this.handleSubmit}> Gửi hàng </Button>
+                            <Button id={this.state.loading?"createPostBtnLoading":"createPostBtn"} onClick={this.handleSubmit}> Gửi hàng &ensp; &ensp;</Button>
                         </Form>
                         
 

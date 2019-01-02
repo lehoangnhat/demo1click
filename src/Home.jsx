@@ -90,6 +90,18 @@ function renderSuggestion(suggestion, { query }) {
 
   return (
     <span className={'suggestion-content ' + suggestion.twitter}>
+    {/*  <span className="name">
+        {
+          parts.map((part, index) => {
+            const className = part.highlight ? 'highlight' : null;
+
+            return (
+              <span className={className} key={index}>{part.text}</span>
+            );
+          })
+        }
+      </span>
+      */}
       <span className="name">
         {
           parts.map((part, index) => {
@@ -342,11 +354,11 @@ class Home extends Component {
       let dangtinCompo;
       if(sessionStorage.getItem('isLogin'))
       dangtinCompo =  
-        <Link to='/createPost'>Đăng tin bán hàng </Link>
+        <Link to='/createPost'>Đăng tin bán hàng</Link>
       
       else{
         dangtinCompo=
-        <Link to='/login' onClick={()=>alert('Vui lòng đăng nhập')}>Đăng tin bán hàng </Link>
+        <Link to='/login' onClick={()=>alert('Vui lòng đăng nhập')}>Đăng tin bán hàng</Link>
       }
 
 
@@ -354,7 +366,7 @@ class Home extends Component {
       return (
         
         <Container fluid id="homeContainer"  >
-        {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+        
           <Row style={{padding:0, margin:0}} >
             <Col sm="6"  >
               <Row>
@@ -409,7 +421,7 @@ class Home extends Component {
                   
                   <Form id="HomeSearcForm" onSubmit={this.handleSearch} inline>
                   
-                    <FormGroup >
+                    <FormGroup className={this.props.loading?"position-relative form-group loader": "position-relative form-group" } >
                     
                    {/*  <Input type="text" id="HomeSearchProductName" placeholder="Tìm sản phẩm"
                       value={this.props.query} onChange={this.handleQueryChange} onKeyPress={this.handleKeyPress}/>
@@ -421,9 +433,9 @@ class Home extends Component {
                         getSuggestionValue={getSuggestionValue}
                         renderSuggestion={renderSuggestion}
                         inputProps={inputProps}
-
+                        
                         />
-                    
+                    {this.props.loading ? <div className='loader'/> :  null}
                     </FormGroup>
                    
                     <Button id ="HomeSearchBtn" onClick={ this.handleSearch}>

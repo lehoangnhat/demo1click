@@ -42,6 +42,12 @@ class Seller_Dashboard extends Component{
         }
         this.getSellingProduct = this.getSellingProduct.bind(this);
         this.getOrderProduct = this.getOrderProduct.bind(this);
+        this.reloadOrderList = this.reloadOrderList.bind(this);
+    }
+    
+    reloadOrderList(){
+       
+        this.getSellingProduct();
     }
 
     getSellingProduct(){
@@ -53,7 +59,7 @@ class Seller_Dashboard extends Component{
                 "x-access-token": token,
             }
         }).then(function(response) {
-            console.log(response.data)
+          
             
             self.setState({
                 sellingProduct:response.data.data.items
@@ -75,7 +81,7 @@ class Seller_Dashboard extends Component{
             self.setState({
                 orderProduct:response.data.data.items
             })   
-            console.log(response.data)
+        
         })
     }
     componentDidMount(){
@@ -94,7 +100,7 @@ class Seller_Dashboard extends Component{
         return (
         <Router history={history}>
             <Container id="DashboardContainer" fluid >
-            {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+            
                 
                 <Jumbotron id="DashboardJumbo">
                     <Row style={{margin:"0"}}>
@@ -103,29 +109,26 @@ class Seller_Dashboard extends Component{
                         </Col>
                     </Row>
                     <Row>
-                        <Col style={{borderRight:"1px solid #E9E9E9"}} xs="3">
+                        <Col style={{borderRight:"1px solid #E9E9E9"}} sm="3" md="3">
                             <Nav vertical>
                                 <NavItem>
                                     <Link to="/dashboard/">Quản lý tài khoản</Link>
                                 </NavItem>
                                 <NavItem>
-                                    <Link to="/dashboard/order">Đơn hàng đang mua</Link>
+                                    <Link to="/dashboard/order">Đơn hàng đã mua</Link>
                                 </NavItem>
                                 <NavItem>
                                 <Link to="/dashboard/selling">Sản phẩm đang bán</Link>
                                 </NavItem>
-                             {/*   <NavItem>
-                                    <Link to="#" >Lịch sử giao dịch</Link>
-                                </NavItem>
-                             */}
+                
                             </Nav>
                         </Col>
 
-                        <Col xs="9">
+                        <Col sm="9" md="9">
                             <Switch>
                                 <Route exact path="/dashboard/" component={UserInfo} />
                                 <Route path="/dashboard/order" render={(props) => <OrderList {...props} orderList={this.state.orderProduct} handleSelected={this.props.handleSelected} /> } />
-                                <Route path="/dashboard/selling" render={(props) => <SellingList {...props} sellingList={this.state.sellingProduct} handleSelected={this.props.handleSelected} /> }/>
+                                <Route path="/dashboard/selling" render={(props) => <SellingList {...props} sellingList={this.state.sellingProduct} handleSelected={this.props.handleSelected} reloadOrderList={this.reloadOrderList} /> }/>
                             </Switch>
                         </Col>
                     </Row>

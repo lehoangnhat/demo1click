@@ -21,6 +21,7 @@
     "react-avatar": "^3.4.6",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-date-picker": "^5.1.0",
+    "react-confirm-alert": "^2.0.7",
     "react-credit-cards": "^0.7.0",
     "react-data-menu": "^1.1.1",
     "react-datepicker": "^1.8.0",

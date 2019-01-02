@@ -42,11 +42,15 @@ class Seller_Cart extends Component{
             totalPrice: 0,
             productIdList:[],
             productQuantityList:[],
+            listBuy:[],
+            quantity:[],
+            defaultQuant:1
         };
 
         this.handleRemove = this.handleRemove.bind(this);
         this.handleCheckout = this.handleCheckout.bind(this);
-        this.handleDecreaseQuantity = this.handleDecreaseQuantity.bind(this);
+        this.handleChangeQuantity = this.handleChangeQuantity.bind(this);
+       
     }
     
 
@@ -62,78 +66,78 @@ class Seller_Cart extends Component{
         let tempTotal =0;
         let tmpListID =[];
         let tmpQList = [];
+        let tmpBuyList =[];
+        let tmpQuanList=[];
         nextprops.cart.map(( item, index) => {
             tempTotal = tempTotal + parseInt(item.price);
             tmpListID.push(item.id);
             tmpQList.push(item.quantity);
+            tmpBuyList.push(item)
+            tmpQuanList.push(1)
         });
         
         this.setState({
             totalPrice: tempTotal,
             productIdList: tmpListID,
-            productQuantityList:tmpQList
+            productQuantityList:tmpQList,
+            listBuy:tmpBuyList,
+            quantity:tmpQuanList
         })
     }
-    handleDecreaseQuantity(){
+    
+    handleChangeQuantity(e,index){
+        let tmpQ = this.state.quantity;
+        tmpQ[index] = e.target.value;
+        this.setState({
+            quantity:tmpQ
+        }) 
 
-        for(var i=0;i<this.state.productIdList.length;i++){
-            console.log('updatequantity')
-            let pid = this.state.productIdList[i];
-            let pQuant = this.state.productQuantityList[i] - 1
-            console.log(pQuant)
-            axios({
-                url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
-                method: 'put',
-                data:{
-                    quantity: pQuant-1
-                }
-                
-                
-                
-                }).then(function (response){
-                    console.log(response.data)
-        
-                });
-        }
     }
 
     handleRemove(item){
         this.props.removeFromCart(item);
-        this.setState({
-            totalPrice: this.props.cart.length
-        })
+        
     }
 
     handleCheckout(){
-        history.push('/address')
-
-
-       /* let token = JSON.parse(sessionStorage.getItem('token'));
-
-        let self = this;
-        axios({
-        url: 'http://localhost:9997/api/user/order',
-        method: 'post',
-        headers:{
-            "x-access-token": token,
-        },
-        data:{
-            productIDs:self.state.productIdList,
-            note:'',
-            shippingAddress:''
+        
+        //this.handleDecreaseQuantity();
+        if(this.state.productIdList.length<=0){
+            alert("Không có hàng")
+        }
+        else{
+            this.props.handleCartQuantity(this.state.quantity)
+            history.push('/address')
         }
         
+
+
+        // let token = JSON.parse(sessionStorage.getItem('token'));
+
+        // let self = this;
+        // axios({
+        // url: 'http://localhost:9997/api/user/order',
+        // method: 'post',
+        // headers:{
+        //     "x-access-token": token,
+        // },
+        // data:{
+        //     productIDs:self.state.listBuy,
+        //     note:'',
+        //     shippingAddress:''
+        // }
         
         
-        }).then(function (response){
-            //alert('Thành công');
-            //self.props.cartCheckout();
-            //self.handleDecreaseQuantity();
+        
+        // }).then(function (response){
+        //     alert('Thành công');
+        //     //self.props.cartCheckout();
+        //     //self.handleDecreaseQuantity();
 
 
-        });
+        // });
 
-        */
+        
     }
 
     toggle() {
@@ -159,23 +163,30 @@ class Seller_Cart extends Component{
         return (
             <Media key={index} style={{paddingBottom:"1%",paddingTop:"1%",borderBottom:"1px #E9E9E9 solid"}}> 
             <Media left src={item.images+'.jpg'} alt="productImg" id="cartProductImg"/>
-            <Media body>
             
-                <Media id="cartProductName">{item.name}</Media>
-               {/* <Media id="cartSellerName"> Người bán: </Media>
-                */}
-                <Media id="cartPrice"> {formatter.format(item.price)} </Media>
-                <Media id="cartRemoveText"  onClick={ () => { this.handleRemove(item)
-            }} 
-                    onMouseEnter={() => {
-                        document.body.style.cursor = "pointer";
-                    }}
-                    onMouseLeave={() => {
-                        document.body.style.cursor = "default";
-                    }}> 
-                    Xóa 
-                </Media>
+            <Media body>
+                <Row>
+                <Col sm="8" md="8">
+                    <Media id="cartProductName">{item.name}</Media>
+                {/* <Media id="cartSellerName"> Người bán: </Media>
+                    */}
+                    <Media id="cartPrice"> {formatter.format(item.price)} </Media>
+                    <Media id="cartRemoveText"  onClick={ () => { this.handleRemove(item)}} 
+                        onMouseEnter={() => {
+                            document.body.style.cursor = "pointer";
+                        }}
+                        onMouseLeave={() => {
+                            document.body.style.cursor = "default";
+                        }}> 
+                        Xóa 
+                    </Media>
+                </Col>
+                <Col sm="4" md="4">
+                    <Input style={{maxWidth:"40%"}} type="number" step="1" value={this.state.quantity[index]} onChange={(e)=>this.handleChangeQuantity(e,index)} />
+                </Col>
+                </Row>
             </Media>
+            
         </Media>
         )
 
@@ -187,13 +198,15 @@ class Seller_Cart extends Component{
 
         return (
             <Container id="cartContain" fluid >
-            {this.props.loading ? <ReactLoading id="loading" type="spin" color="grey" height={200} width={200} /> :  null}
+            
                 <Row>
-                    <Col xs="9" md="9">
+                    <Col sm="9" md="9">
                     <Jumbotron id="jumboCartLeft">
                             <Row style={{ height:"6%",backgroundColor:"#FAFAFA"}}>
                                 <Label id="cartLeftLabel">Giỏ hàng của bạn</Label>
                             </Row>
+
+
                             <Row >
                                 <Col style={{paddingBottom:"2%",paddingTop:"2%"}} md="12" xs="12">
                                     {cartList}
@@ -201,7 +214,7 @@ class Seller_Cart extends Component{
                             </Row>
                         </Jumbotron>
                     </Col>
-                    <Col style={{padding:0, margin:0 }} md="3">
+                    <Col style={{padding:0, margin:0 }} sm="3" md="3">
                     <Jumbotron id="jumboCartRight">
                     <Row style={{height:"6%",backgroundColor:"#FAFAFA"}}>
                         <Col xs="12" md="12">

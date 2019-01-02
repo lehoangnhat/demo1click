@@ -30,7 +30,7 @@ class Product extends Component{
       minimumFractionDigits: 0
     })
     return (
-      <Card key={id} id="productCard" onClick={() => {
+      <Card key={this.props.index} id="productCard" onClick={() => {
         this.props.handleSelected(product);
         document.body.style.cursor = "default";
         history.push({
