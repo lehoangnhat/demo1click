@@ -91,7 +91,7 @@ class SellingList extends Component{
     componentDidMount(){
         
         let self=this;
-        axios.get('http://localhost:9997/api/category/search',
+        axios.get('https://demo1clickapi.herokuapp.com/api/category/search',
         {
 
         })
@@ -170,6 +170,7 @@ class SellingList extends Component{
             selectedCategory:product.categoryID,
             imgUrl:product.images,
             description:product.description,
+            imagePreviewUrl:product.images
          })
         
         this.toggle();

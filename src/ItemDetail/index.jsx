@@ -174,13 +174,18 @@ componentWillUnmount(){
         <Button id="detailBtn" onClick={() => history.push('/login') } > Đăng nhập để mua hàng </Button>
     }
     else{
-      buyButton=
-      <Button id="detailBtn" onClick={() => {
-        this.props.addToCart(this.props.selected);
-        this.handleAddAnimation();
+        if(parseInt(this.props.selected.quantity)===0){
+          buyButton= <Button id="detailBtn" disabled> Hết hàng</Button>
+        }
+        else{
+        buyButton=
+        <Button id="detailBtn" onClick={() => {
+          this.props.addToCart(this.props.selected);
+          this.handleAddAnimation();
         
+        }
+        } > {!this.state.isAdded ? "Thêm vào giỏ hàng" : "✔ Đã thêm"}   </Button>
       }
-      }> {!this.state.isAdded ? "Thêm vào giỏ hàng" : "✔ Đã thêm"}   </Button>
     }
     const formatter = new Intl.NumberFormat('de-DE', {
       style: 'currency',

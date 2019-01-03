@@ -152,7 +152,7 @@ class App extends Component {
   handleLogout(e){
     e.preventDefault();
     sessionStorage.clear();
-   
+    history.push("/")
   }
   
   handleChangeState(_isHome){

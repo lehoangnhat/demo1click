@@ -40,6 +40,7 @@ class Seller_Cart extends Component{
         this.state = {
             productsTemp: data,
             totalPrice: 0,
+            totalPriceList:[],
             productIdList:[],
             productQuantityList:[],
             listBuy:[],
@@ -68,18 +69,21 @@ class Seller_Cart extends Component{
         let tmpQList = [];
         let tmpBuyList =[];
         let tmpQuanList=[];
+        let tmpTotalPriceList =[];
         nextprops.cart.map(( item, index) => {
             tempTotal = tempTotal + parseInt(item.price);
+            tmpTotalPriceList.push(parseInt(item.price))
             tmpListID.push(item.id);
-            tmpQList.push(item.quantity);
             tmpBuyList.push(item)
             tmpQuanList.push(1)
         });
         
+        console.log(tmpBuyList)
+
         this.setState({
-            totalPrice: tempTotal,
+            totalPrice:tempTotal,
+            totalPriceList: tmpTotalPriceList,
             productIdList: tmpListID,
-            productQuantityList:tmpQList,
             listBuy:tmpBuyList,
             quantity:tmpQuanList
         })
@@ -87,9 +91,31 @@ class Seller_Cart extends Component{
     
     handleChangeQuantity(e,index){
         let tmpQ = this.state.quantity;
+        let tmpP = this.state.totalPriceList;
+        let tmpPlist = this.state.totalPriceList;
+        //let tmpValue = tmpPlist[index]*e.target.value;
+        
+        let tempTotal = 0;
+
         tmpQ[index] = e.target.value;
+        
+        
+        //tempTotal = tempTotal + tmpP[index]*e.target.value;
+        for(var i=0; i<tmpPlist.length;i++){
+            if(i===index){
+                tempTotal= tempTotal+  tmpPlist[index]*e.target.value
+            }
+            else{
+                tempTotal = tempTotal + tmpPlist[i]*tmpQ[i]
+            }
+        }
+        
+
+//        tmpP[index] = tmpP[index] * e.target.value
         this.setState({
-            quantity:tmpQ
+            quantity:tmpQ,
+            totalPrice:tempTotal,
+            //totalPriceList:tmpPlist
         }) 
 
     }
@@ -182,7 +208,7 @@ class Seller_Cart extends Component{
                     </Media>
                 </Col>
                 <Col sm="4" md="4">
-                    <Input style={{maxWidth:"40%"}} type="number" step="1" value={this.state.quantity[index]} onChange={(e)=>this.handleChangeQuantity(e,index)} />
+                    <Input style={{maxWidth:"40%"}} type="number" step="1" min="1" max={item.quantity} value={this.state.quantity[index]} onChange={(e)=>this.handleChangeQuantity(e,index)} />
                 </Col>
                 </Row>
             </Media>

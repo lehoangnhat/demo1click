@@ -106,7 +106,7 @@ class Payment extends Component {
     }
 
     handleSendAddress(){
-        console.log('send Address')
+        
         let token = JSON.parse(sessionStorage.getItem('token'));
 
         let self = this;
@@ -125,7 +125,7 @@ class Payment extends Component {
         
         
         }).then(function (response){
-            console.log(response.data)
+         
             //self.props.cartCheckout();
             //self.handleDecreaseQuantity();
 
@@ -136,7 +136,7 @@ class Payment extends Component {
     }
 
     handleDecreaseQuantity(){
-        console.log(this.state.productIdList)
+    
         let self=this;
         for(var i=0;i<this.state.productIdList.length;i++){
             
@@ -148,13 +148,12 @@ class Payment extends Component {
                 url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
                 method: 'put',
                 data:{
-                    quantity:pQuant
+                    quantity:pQuant.toString()
                 }
                 
                 
                 
                 }).then(function (response){
-                    
                 });
         }
         alert('Thanh toán thành công')
