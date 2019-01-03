@@ -157,7 +157,7 @@ class Seller_CreatePost extends Component{
     }
 
     handleValidation(){
-        let {productName,productPrice,tags,selectedCategory,imgUrl} = this.state;
+        let {productName,productPrice,tags,selectedCategory,file} = this.state;
 
         let errors = {};
         let formIsValid = true;
