@@ -383,7 +383,7 @@ class Seller_CreatePost extends Component{
                         */}
 
                         <ReactDropdown id="listCategory" options={this.state.category} onChange={this.handleClickCategory} value={this.state.selectedCategory} placeholder="Chọn danh mục" />
-                        <span className="error">{this.state.errors["quantity"]}</span>
+                        <span className="error">{this.state.errors["category"]}</span>
                             <Input type="file" name="file" style={{marginTop:"5%"}} onChange={this.handleImageChange} />
                             <span className="error">{this.state.errors["img"]}</span>
                             <Container id="imgPreview">
