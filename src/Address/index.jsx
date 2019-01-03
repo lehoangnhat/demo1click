@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import './Address.css'
 import addressPic from '../img/address.jpg'
 
-let userData= JSON.parse(sessionStorage.getItem('userData'));
+
 
 class Address extends Component {
     constructor(props) {
@@ -27,7 +27,7 @@ class Address extends Component {
   
       // reset login status
       //this.props.dispatch(userActions.logout());
-  
+      let userData= JSON.parse(sessionStorage.getItem('userData'));
       this.state = {
         name: userData.lastName + ' ' + userData.firstName,
         sdt:'',
