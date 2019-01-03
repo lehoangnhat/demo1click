@@ -23,12 +23,15 @@ import Product from '../component/Product';
 import { connect } from 'react-redux';
 import { addToCart } from '../_action/cartActions';
 
+import profilePic from '../img/blank_male.png';
+
 class ItemDetail extends Component{
   constructor(props) {
     super(props);
     this.state = {
       productsTemp: [],
       isAdded:false,
+      userData:[],
     };
     this.handleAddAnimation = this.handleAddAnimation.bind(this);
     
@@ -82,9 +85,11 @@ class ItemDetail extends Component{
     }
     else{
       
-   /*   let creID = this.props.selected.creatorID;
+      let creID = this.props.selected.creatorID;
+      let self = this
+      console.log(creID)
       axios({
-        url: 'http://localhost:9997/api/user/'+creID,
+        url: 'https://demo1clickapi.herokuapp.com/api/user/'+creID,
         method: 'get'
         
 
@@ -92,9 +97,11 @@ class ItemDetail extends Component{
         }).then(function (response){
           console.log('userInfo')
             console.log(response)
-            
+            self.setState({
+              userData:response.data.data
+            })
         });
-*/
+
     }
     
 
@@ -214,7 +221,7 @@ componentWillUnmount(){
                     </Col>
                     </Row>
                     <Row>
-                      <Col xs="7">
+                      <Col md="7" sm="7">
                         <Media src={this.props.selected.images+'.jpg'} alt="image" id ="thumbnailPic"/>
                         <p style={{whiteSpace:"pre-wrap",paddingLeft:"5%",maringTop:"10%"}}>
                         {String(tmpString).replace(/; /g, "\n")}
@@ -223,11 +230,18 @@ componentWillUnmount(){
                           
                       </Col>
 
-                      <Col xs="5">
+                      <Col  md="5" sm="5">
                         <h2> {this.props.selected.name} </h2>
                         <h6> {this.props.selected.categoryID} </h6>
                         <h3 style={{color:"#FEAF34"}}> {formatter.format(this.props.selected.price)} </h3>
-                        
+                        <Row style={{marginBottom:"5%"}}>
+                          <Col xs="3" sm="3" md="3">
+                            <img src={profilePic} style={{maxWidth:"100px"}} alt="image"/>
+                          </Col>
+                          <Col xs="9" sm="9" md="9" style={{textAlign:"left",lineHeight:"100px"}}>
+                            {this.state.userData.lastName +" "+this.state.userData.firstName }
+                          </Col>
+                        </Row>
                         {buyButton}
 
                         <div style={{marginTop:"5%"}}>
