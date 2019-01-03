@@ -32,7 +32,7 @@ class OrderList extends Component{
                             
                         </Col>
                         <Col sm='6' md='6' style={{paddingLeft:"10%"}}>
-                            <p id="quantity"> Số lượng: {product.quantity}</p>
+                            
                             <p > Mã đơn hàng : </p> 
                             <p id="orderID" > {order._id} </p>
                         </Col>
