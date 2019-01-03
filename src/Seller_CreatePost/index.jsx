@@ -179,7 +179,7 @@ class Seller_CreatePost extends Component{
             errors["category"] = "Xin chọn danh mục";
         }
 
-        if(!imgUrl){
+        if(!file){
             formIsValid = false;
             errors["img"] = "Xin thêm hình";
         }
