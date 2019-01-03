@@ -353,8 +353,9 @@ class Seller_CreatePost extends Component{
                                     <FormGroup>
                                     <Label for="price">Giá bán</Label>
                                     <Input type="text" name="productPrice" id="createPostPriceBox" placeholder="VND" onChange={this.handleChange}/>
-                                    </FormGroup>
                                     <span className="error">{this.state.errors["price"]}</span>
+                                    </FormGroup>
+                                    
                                 </Col>
                                 <Col xs={6}>
                                     <FormGroup>
