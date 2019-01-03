@@ -137,3 +137,28 @@
     font-size: 13px;
     color: red;
   }
+
+#registerBtnLoading{
+    position: relative;
+    width: 46%;
+    
+    left:22%;
+    margin-top: 4%;
+
+    background: #303030;
+    border-radius: 5px;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: bold;
+    line-height: normal;
+    font-size: 20px;
+    text-align: center;
+
+    color: #FEAF34;
+
+    background-image: url("http://loadinggif.com/images/image-selection/3.gif");
+    background-size: 25px 25px;
+    background-position: center;
+    background-repeat: no-repeat;
+}

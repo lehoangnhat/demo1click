@@ -34,7 +34,8 @@ class Login extends Component {
     this.state = {
         username: '',
         password: '',
-        errors: {}
+        errors: {},
+        loading:false
     };
 
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
@@ -106,7 +107,9 @@ class Login extends Component {
         e.preventDefault();
         
         if(this.handleValidation()){
-        
+        this.setState({
+          loading:true
+        })
       
         let self = this
         axios({
@@ -120,6 +123,9 @@ class Login extends Component {
 
         })
         .then(function (response) {
+          self.setState({
+            loading:false
+          })
           console.log(response.data)
           if(response.data.status ==='SUCCESS'){
             alert("Đăng nhập thành công")
@@ -205,7 +211,7 @@ class Login extends Component {
                                 <span className="error">{this.state.errors["password"]}</span>
                               </FormGroup>
                               <FormGroup className="col-md-12 col-sm-12" style={{margin:0,paddingLeft:30,paddingRight:30}} >
-                              <Button id="loginBtn" type="submit" onClick={this.handleSubmit}>Đăng nhập</Button>
+                              <Button id={this.state.loading?"loginBtnLoading":"loginBtn"} type="submit" onClick={this.handleSubmit}>Đăng nhập</Button>
                               <NotificationContainer/>
                               </FormGroup>
                              {/* <Link to="/register" className="btn btn-link">Register</Link>

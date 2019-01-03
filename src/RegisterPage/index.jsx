@@ -37,7 +37,7 @@ class RegisterPage extends Component {
         lname:'',
         dob:undefined,
 
-      
+        loading:false,
         errors: {}
 
       };
@@ -113,8 +113,10 @@ class RegisterPage extends Component {
 
     handleSubmit(e) {
       e.preventDefault();
-
-      
+      let self=this
+      this.setState({
+        loading:true
+      })
         
       if(this.handleValidation()){
 
@@ -128,13 +130,19 @@ class RegisterPage extends Component {
         .then(function (response) {
           console.log(response.data)
           if(response.data.status ==='SUCCESS'){
-
+            self.setState({
+              loading:false
+            })
             alert("Đăng ký thành công");
             history.push("/login");
           }
           else if(response.data.status === "ERROR"){
             if(response.data.data.code ==="USERNAME_EXIST"){
-            alert("Tài khoản đã tồn tại")
+            alert("Tài khoản đã tồn tại");
+            self.setState({
+              loading:false
+            })
+            
             }
           }
         })
@@ -225,7 +233,7 @@ class RegisterPage extends Component {
                                     <span className="error">{this.state.errors["checkbox"]}</span>
 
                                 </FormGroup>
-                                <Button type="submit" id="registerBtn" onClick={this.handleSubmit}>Đăng kí</Button>
+                                <Button type="submit"  id={this.state.loading?"registerBtnLoading":"registerBtn"}  onClick={this.handleSubmit}>Đăng kí</Button>
                                {/* <Link to="/register" className="btn btn-link">Register</Link>
                                 */}
                                 

@@ -100,7 +100,7 @@ class Seller_CreatePost extends Component{
 
     componentDidMount(){
         let self=this;
-        axios.get('http://localhost:9997/api/category/search',
+        axios.get('https://demo1clickapi.herokuapp.com/api/category/search',
     {
 
     })
@@ -226,7 +226,7 @@ class Seller_CreatePost extends Component{
                 let tag = self.state.tags
                 let category = self.state.selectedCategory;
                 let description = self.state.description;
-                axios.post("http://localhost:9997/api/user/product",
+                axios.post("https://demo1clickapi.herokuapp.com/api/user/product",
                 {
                     name: productName,
                     price:productPrice,
@@ -346,6 +346,7 @@ class Seller_CreatePost extends Component{
                             <FormGroup>
                             <Label for="ProductNameBox">Tên mặt hàng</Label>
                             <Input type="text" name="productName" id="ProductNameBox" placeholder="Nhập tên sản phẩm " onChange={this.handleChange} />
+                            <span className="error">{this.state.errors["name"]}</span>
                             </FormGroup>
                             <Row form>
                                 <Col xs={6}>
@@ -353,12 +354,14 @@ class Seller_CreatePost extends Component{
                                     <Label for="price">Giá bán</Label>
                                     <Input type="text" name="productPrice" id="createPostPriceBox" placeholder="VND" onChange={this.handleChange}/>
                                     </FormGroup>
+                                    <span className="error">{this.state.errors["price"]}</span>
                                 </Col>
                                 <Col xs={6}>
                                     <FormGroup>
                                     <Label for="quantity">Số lượng</Label>
                                     <Input type="text" name="productQuantity" id="createPostQuantityBox" placeholder="1 " onChange={this.handleChange}/>
                                     </FormGroup>
+
                                 </Col>
                                 
                             </Row>
@@ -380,8 +383,9 @@ class Seller_CreatePost extends Component{
                         */}
 
                         <ReactDropdown id="listCategory" options={this.state.category} onChange={this.handleClickCategory} value={this.state.selectedCategory} placeholder="Chọn danh mục" />
-                       
+                        <span className="error">{this.state.errors["quantity"]}</span>
                             <Input type="file" name="file" style={{marginTop:"5%"}} onChange={this.handleImageChange} />
+                            <span className="error">{this.state.errors["img"]}</span>
                             <Container id="imgPreview">
                                 {imagePreview}
                             </Container>
