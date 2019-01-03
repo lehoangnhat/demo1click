@@ -57,7 +57,8 @@ class Payment extends Component {
       this.handleRadioButton = this.handleRadioButton.bind(this);
       this.validateForm = this.validateForm.bind(this);
       this.handleDecreaseQuantity = this.handleDecreaseQuantity.bind(this);
-      this.handleSendAddress = this.handleSendAddress.bind(this)
+      this.handleSendAddress = this.handleSendAddress.bind(this);
+      this.handleSubmit=this.handleSubmit.bind(this);
      
     }
     validateForm(formId)
@@ -184,23 +185,16 @@ class Payment extends Component {
         this.setState({ [target.name]: target.value });
       };
     
-      handleSubmit = e => {
+      handleSubmit(e){
         e.preventDefault();
         if(this.state.showATM==true){
             if(!this.validateForm('tmpForm')){
                 alert('Xin điền đầy đủ thông tin')
             }
-        else{
-        const { issuer } = this.state;
-        const formData = [...e.target.elements]
-          .filter(d => d.name)
-          .reduce((acc, d) => {
-            acc[d.name] = d.value;
-            return acc;
-          }, {});
-    
-        this.setState({ formData });
-        this.form.reset();
+            else{
+                this.handleDecreaseQuantity();
+                this.handleSendAddress();
+                this.form.reset();
         }
     }
         else{
