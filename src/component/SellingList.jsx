@@ -116,30 +116,48 @@ class SellingList extends Component{
 
         let pid = this.state.productID;
         let self = this;
-        axios({
-            url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
-            method: 'put',
-            data:{
-                name: self.state.productName,
-                price:self.state.productPrice,
-                quantity:self.state.productQuantity,
-                tags:self.state.tags,
-                images: self.state.imgUrl,
-                categoryID:self.state.selectedCategory,
-                description: self.state.description,
-                pstate:self.state.pstate
+        let file = this.state.file;
+        let formData = new FormData();
+        let clientID = "b5a79154dad9962";
+        formData.append("image",file);
+        
+
+        axios.post("https://api.imgur.com/3/image" , formData , {
+            "headers": {
+            
+            "Authorization": "Client-ID "+clientID
             }
-            
-            
-            
-            }).then(function (response){
-                
-                self.toggle();
-                self.props.reloadOrderList();
-                
+            }).then(function(response) {
+                if(response.data.success === true){
+                self.setState({
+                    imgUrl:response.data.data.link
+                })
+				axios({
+					url: 'https://demo1clickapi.herokuapp.com/api/product/'+pid,
+					method: 'put',
+					data:{
+						name: self.state.productName,
+						price:self.state.productPrice,
+						quantity:self.state.productQuantity,
+						tags:self.state.tags,
+						images: self.state.imgUrl,
+						categoryID:self.state.selectedCategory,
+						description: self.state.description,
+						pstate:self.state.pstate
+                }
+                }).then(function (response){
+                    
+                    self.toggle();
+                    self.props.reloadOrderList();
+                    
+                })
+                }
             });
             
-    }
+			
+				
+        
+	}
     handleImageChange(e) {
         
     
