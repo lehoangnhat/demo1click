@@ -88,14 +88,14 @@ class Payment extends Component {
         let tmpBuyList =[];
         
         this.props.cart.map(( item, index) => {
-            tempTotal = tempTotal + parseInt(item.price);
+            
             tmpListID.push(item.id);
             tmpQList.push(item.quantity);
             tmpBuyList.push(item)
         });
         
         this.setState({
-            totalPrice: tempTotal,
+            
             productIdList: tmpListID,
             listBuy:tmpBuyList,
             productQuantityList:tmpQList
@@ -345,7 +345,7 @@ class Payment extends Component {
                         </Form>
 
 
-                        {formATM}
+                    
                         
                         
                         </Col>

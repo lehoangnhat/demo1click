@@ -57,6 +57,7 @@ class Seller_CreatePost extends Component{
             productPrice:'',
             productQuantity:1,
             tags: [],
+            showtag:[],
             selectedCategory:'',
             imgUrl:'',
             description:'',
@@ -64,6 +65,7 @@ class Seller_CreatePost extends Component{
             dropdownOpen: false,
             file: '',
             imagePreviewUrl: '',
+            pstate:"Mới",
             
             suggestions: [
                 { id: 1, name: "Điện thoại" },
@@ -94,8 +96,11 @@ class Seller_CreatePost extends Component{
       }
      
     handleAddition (tag) {
-        const tags = [].concat(this.state.tags, tag)
-        this.setState({ tags })
+        const tags = [].concat(this.state.tags, tag.name)
+        const showtag =[].concat(this.state.showtag,tag)
+        this.setState({ tags, showtag })
+        console.log(this.state.tags)
+        console.log(this.state.showtag)
     }
 
     componentDidMount(){
@@ -153,7 +158,9 @@ class Seller_CreatePost extends Component{
 
       }
     handleChange(event) {
+        
         this.setState({ [event.target.name]: event.target.value });
+        
     }
 
     handleValidation(){
@@ -226,6 +233,7 @@ class Seller_CreatePost extends Component{
                 let tag = self.state.tags
                 let category = self.state.selectedCategory;
                 let description = self.state.description;
+                let pstate = self.state.pstate;
                 axios.post("https://demo1clickapi.herokuapp.com/api/user/product",
                 {
                     name: productName,
@@ -235,7 +243,8 @@ class Seller_CreatePost extends Component{
                     images: imgUrl,
                     producer: producer,
                     categoryID:category,
-                    description: description
+                    description: description,
+                    pstate:pstate
                 }
                 ,
                 {
@@ -355,16 +364,32 @@ class Seller_CreatePost extends Component{
                                     <Input type="text" name="productPrice" id="createPostPriceBox" placeholder="VND" onChange={this.handleChange}/>
                                     <span className="error">{this.state.errors["price"]}</span>
                                     </FormGroup>
-                                    
                                 </Col>
                                 <Col xs={6}>
                                     <FormGroup>
                                     <Label for="quantity">Số lượng</Label>
                                     <Input type="text" name="productQuantity" id="createPostQuantityBox" placeholder="1 " onChange={this.handleChange}/>
                                     </FormGroup>
-
                                 </Col>
                                 
+                            </Row>
+                            <Row style={{margin:0,padding:0,marginBottom:"2%"}} onChange={this.handleChange}>
+                                <p style={{margin:"0",marginRight:"5%"}}> Tình trạng: </p> 
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Mới" defaultChecked/> Mới
+                                </Label>
+                                </FormGroup>
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Đã qua sử dụng" />  Đã qua sử dụng
+                                </Label>
+                                </FormGroup>
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Cũ" /> Cũ
+                                </Label>
+                                </FormGroup>
                             </Row>
                         {/*
                             <FormGroup>
@@ -391,7 +416,7 @@ class Seller_CreatePost extends Component{
                                 {imagePreview}
                             </Container>
                             <ReactTags
-                                tags={this.state.tags}
+                                tags={this.state.showtag}
                                 suggestions={this.state.suggestions}
                                 handleDelete={this.handleDelete.bind(this)}
                                 handleAddition={this.handleAddition.bind(this)}

@@ -326,7 +326,7 @@ class App extends Component {
           
           
         }).then(function (response){
-          console.log(response.data)
+          
         });
   }
 

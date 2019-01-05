@@ -34,7 +34,7 @@ class ItemDetail extends Component{
       userData:[],
     };
     this.handleAddAnimation = this.handleAddAnimation.bind(this);
-    
+    this.getProducts = this.getProducts.bind(this);
   }
 
  
@@ -54,13 +54,11 @@ class ItemDetail extends Component{
   }
   getProducts() {
     let sID = this.props.selected.id;
+    console.log(sID)
     let self = this;
-    axios.get('https://demo1clickapi.herokuapp.com/api/product/related/'+sID,
-    {
-    
-    })
+    axios.get('https://demo1clickapi.herokuapp.com/api/product/related/'+parseInt(sID))
     .then(function (response) {
-        
+        console.log(response.data)
         let data= response.data.data.items;
         self.setState({
           productsTemp: data
@@ -75,10 +73,11 @@ class ItemDetail extends Component{
 
   }
   componentWillMount() {
-    this.getProducts();
+    
 
   }
   componentDidMount(){
+    this.getProducts();
     this.props.handleChangeState(false);
     if(this.props.selected.length ===0){
       history.push('/')
@@ -87,7 +86,8 @@ class ItemDetail extends Component{
       
       let creID = this.props.selected.creatorID;
       let self = this
-      console.log(creID)
+      
+      if(creID!== undefined){
       axios({
         url: 'https://demo1clickapi.herokuapp.com/api/user/'+creID,
         method: 'get'
@@ -101,6 +101,7 @@ class ItemDetail extends Component{
               userData:response.data.data
             })
         });
+      }
 
     }
     
@@ -113,6 +114,7 @@ componentWillUnmount(){
     this.props.handleChangeState(true);
 }
       render() {
+        
         let itemData = this.state.productsTemp
         .map((product,index) => {
           return (
@@ -209,6 +211,22 @@ componentWillUnmount(){
     else{
       label1Click=null
     }
+
+    let creatorInfo;
+    if(this.props.selected.creatorID !== undefined){
+      creatorInfo = <Row style={{marginBottom:"5%"}}>
+                      <Col xs="3" sm="3" md="3">
+                        <img src={profilePic} style={{maxWidth:"100px"}} alt="image"/>
+                      </Col>
+                      <Col xs="9" sm="9" md="9" style={{textAlign:"left",lineHeight:"100px"}}>
+                        {this.state.userData.lastName +" "+this.state.userData.firstName }
+                      </Col>
+                    </Row>
+    }
+    else{
+      creatorInfo = null
+    }
+
         return (
           <Container fluid={"true"} id="DetailContainer" >
           
@@ -223,7 +241,11 @@ componentWillUnmount(){
                     <Row>
                       <Col md="7" sm="7">
                         <Media src={this.props.selected.images+'.jpg'} alt="image" id ="thumbnailPic"/>
-                        <p style={{whiteSpace:"pre-wrap",paddingLeft:"5%",maringTop:"10%"}}>
+                        
+                        <p style={{whiteSpace:"pre-wrap",paddingLeft:"5%",marginTop:"5%"}}>
+                        Thông tin sản phẩm: <br/>
+                        </p>
+                        <p style={{whiteSpace:"pre-wrap",paddingLeft:"5%",marginTop:"5%"}}>
                         {String(tmpString).replace(/; /g, "\n")}
                         </p>
                        
@@ -234,18 +256,15 @@ componentWillUnmount(){
                         <h2> {this.props.selected.name} </h2>
                         <h6> {this.props.selected.categoryID} </h6>
                         <h3 style={{color:"#FEAF34"}}> {formatter.format(this.props.selected.price)} </h3>
-                        <Row style={{marginBottom:"5%"}}>
-                          <Col xs="3" sm="3" md="3">
-                            <img src={profilePic} style={{maxWidth:"100px"}} alt="image"/>
-                          </Col>
-                          <Col xs="9" sm="9" md="9" style={{textAlign:"left",lineHeight:"100px"}}>
-                            {this.state.userData.lastName +" "+this.state.userData.firstName }
-                          </Col>
-                        </Row>
+                        {creatorInfo}
                         {buyButton}
 
                         <div style={{marginTop:"5%"}}>
                           {label1Click}
+                        </div>
+                        <div>
+                          Tình trạng sản phẩm:
+                        {this.props.selected.pstate?" "+this.props.selected.pstate:" Mới"}
                         </div>
                       </Col>
                     </Row>

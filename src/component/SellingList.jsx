@@ -26,6 +26,7 @@ class SellingList extends Component{
             productQuantity:1,
             producer:'',
             tags: [],
+            showtag:[],
             selectedCategory:'',
             imgUrl:'',
             description:'',
@@ -33,7 +34,7 @@ class SellingList extends Component{
             dropdownOpen: false,
             file: '',
             imagePreviewUrl: '',
-
+            pstate:"Mới",
 
             selectedName:'',
             selectedPrice:'',
@@ -43,7 +44,7 @@ class SellingList extends Component{
             suggestions: [
                 { id: 1, name: "Điện thoại" },
                 { id: 2, name: "Sony" },
-                { id: 3, name: "Nike" },
+                { id: 3, name: "Nokia" },
                 { id: 4, name: "Máy tính" },
                 { id: 5, name: "Giày dép" }
             ],
@@ -75,8 +76,11 @@ class SellingList extends Component{
       }
      
     handleAddition (tag) {
-        const tags = [].concat(this.state.tags, tag)
-        this.setState({ tags })
+        const tags = [].concat(this.state.tags, tag.name)
+        const showtag =[].concat(this.state.showtag,tag)
+        this.setState({ tags, showtag })
+        console.log(this.state.tags)
+        console.log(this.state.showtag)
     }
 
     componentWillReceiveProps(nextprops){
@@ -122,7 +126,8 @@ class SellingList extends Component{
                 tags:self.state.tags,
                 images: self.state.imgUrl,
                 categoryID:self.state.selectedCategory,
-                description: self.state.description
+                description: self.state.description,
+                pstate:self.state.pstate
             }
             
             
@@ -161,12 +166,46 @@ class SellingList extends Component{
     }
 
     handleClickedProduct(product){
+        if(product.tags[0].name!==undefined){
+            let showtag=[];
+            for(var i=0;i<product.tags.length;i++){
+                
+                let tmpshowTag = {'id':i, 'name':product.tags[i].name}
+                showtag.push(tmpshowTag)
+            }
+
+            this.setState({
+                productID: product.id,
+                productName:product.name,
+                productPrice:product.price,
+                productQuantity:product.quantity,
+                tags: product.tags,
+                showtag:showtag,
+                selectedCategory:product.categoryID,
+                imgUrl:product.images,
+                description:product.description,
+                imagePreviewUrl:product.images,
+                pstate:product.pstate
+             })
+            
+            this.toggle();
+        }
+        else{
+        let showtag=[];
+        for(var i=0;i<product.tags.length;i++){
+            
+            let tmpshowTag = {'id':i, 'name':product.tags[i]}
+            showtag.push(tmpshowTag)
+        }
+        console.log(showtag)
+
          this.setState({
             productID: product.id,
             productName:product.name,
             productPrice:product.price,
             productQuantity:product.quantity,
             tags: product.tags,
+            showtag:showtag,
             selectedCategory:product.categoryID,
             imgUrl:product.images,
             description:product.description,
@@ -174,6 +213,7 @@ class SellingList extends Component{
          })
         
         this.toggle();
+        }
 
 
     }
@@ -231,7 +271,7 @@ class SellingList extends Component{
         const sName= this.state.productName;
         const sPrice = this.state.productPrice;
         const sQuant = this.state.productQuantity;
-        const sTags= this.state.tags;
+        const sTags= this.state.showtag;
         const sDesc = this.state.description;
         const sCategory = this.state.selectedCategory; 
        
@@ -263,7 +303,24 @@ class SellingList extends Component{
                                 </Col>
                                 
                             </Row>
-                       
+                            <Row style={{margin:0,padding:0,marginBottom:"2%"}} onChange={this.handleChange}>
+                                <p style={{margin:"0",marginRight:"5%"}}> Tình trạng: </p> 
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Mới" defaultChecked/> Mới
+                                </Label>
+                                </FormGroup>
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Đã qua sử dụng" />  Đã qua sử dụng
+                                </Label>
+                                </FormGroup>
+                                <FormGroup check inline>
+                                <Label check>
+                                    <Input type="radio" name="pstate" value="Cũ" /> Cũ
+                                </Label>
+                                </FormGroup>
+                            </Row>
 
                         <ReactDropdown id="listCategory" options={this.state.category} onChange={this.handleClickCategory} value={sCategory} placeholder="Chọn danh mục" />
                        
@@ -276,7 +333,7 @@ class SellingList extends Component{
                                 suggestions={this.state.suggestions}
                                 handleDelete={this.handleDelete.bind(this)}
                                 handleAddition={this.handleAddition.bind(this)} 
-                                
+                                allowNew="true"
                                 />
 
                             <FormGroup style={{marginTop:"2%"}}>
