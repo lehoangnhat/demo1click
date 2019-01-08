@@ -272,7 +272,7 @@ class Payment extends Component {
                         </Form>
 
 
-                    
+                        {formATM}
                         
                         
                         </Col>
