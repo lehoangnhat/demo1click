@@ -204,7 +204,7 @@ class Payment extends Component {
          // this.props.cartCheckout();
             
         }
-
+        history.push("/")
         
       };
       handleRadioButton(value) {
@@ -216,88 +216,15 @@ class Payment extends Component {
     render(){
         const { name, number, expiry, cvc, focused, issuer, formData } = this.state;
         let formATM;
-        if(!this.state.showATM) {
+        
             formATM = <div id="thanhtoanBtnHolder">
             <Button id="thanhtoanBtn" onClick={this.handleSubmit}>
                 Thanh toán
             </Button>
         </div>
-          }
-        else if(this.state.showATM) {
-        
-         formATM = (
-            <div id="formATM">
-            <Card
-            number={number}
-            name={name}
-            expiry={expiry}
-            cvc={cvc}
-            focused={focused}
-            callback={this.handleCallback}
-            issuer="visa"
-        />
-        <form ref={c => (this.form = c)} onSubmit={this.handleSubmit} id="tmpForm">
-            <div className="form-group" style={{marginTop:'2%'}}>
-            <input
-                type="tel"
-                name="number"
-                className="form-control"
-                placeholder="Card Number"
-                pattern="[\d| ]{16,22}"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-            />
-            <small>E.g.: 49..., 51..., 36..., 37...</small>
-            </div>
-            <div className="form-group">
-            <input
-                type="text"
-                name="name"
-                className="form-control"
-                placeholder="Name"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-            />
-            </div>
-            <div className="row">
-            <div className="col-6">
-                <input
-                type="tel"
-                name="expiry"
-                className="form-control"
-                placeholder="Valid Thru"
-                pattern="\d\d/\d\d"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-                />
-            </div>
-            <div className="col-6">
-                <input
-                type="tel"
-                name="cvc"
-                className="form-control"
-                placeholder="CVC"
-                pattern="\d{3,4}"
-                required
-                onChange={this.handleInputChange}
-                onFocus={this.handleInputFocus}
-                />
-            </div>
-            </div>
-            <input type="hidden" name="issuer" value={issuer} />
-            <div id="thanhtoanBtnHolder" className="form-actions">
-                <button className="btn btn-primary btn-block" id="thanhtoanBtn" onClick={this.handleSubmit}>
-                    Thanh toán
-                </button>
-            </div>
-        </form>
-        
-        </div>
-        )
-    }
+          
+       
+    
 
         return(
             <Container id="addressContain" fluid >
